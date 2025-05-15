@@ -9,8 +9,7 @@ class Post extends Model
     protected $table = "posts";
     public $timestamps = false;
 
-    public function category()
-    {
-        return $this->belongsTo('App\Models\Category');
+    public function categories() {
+        return $this->belongsToMany(Category::class, 'categories_posts', 'post_id', 'category_id');
     }
 }

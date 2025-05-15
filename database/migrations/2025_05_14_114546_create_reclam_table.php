@@ -13,7 +13,7 @@ class CreateReclamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reclams', function (Blueprint $table) {
+        Schema::create('reclam', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateReclamsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reclams');
+        Schema::dropIfExists('reclam');
     }
 }

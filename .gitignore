@@ -3,6 +3,7 @@
 /public/storage
 /storage
 .env
+.idea
 *.log
 *.mp4
 *.mov

@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $table = "category";
-    public $timestamps = false;
+    protected $table = "categories";
 
     public function posts()
     {
-        return $this->hasMany('App\Post');
+        return $this->belongsToMany(Post::class, 'categories_posts', 'category_id', 'post_id');
     }
 }

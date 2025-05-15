@@ -13,7 +13,7 @@ use App\Models\Interview;
 
 class IndexController extends Controller
 {
-    public function index()
+    public function old_index()
     {
         $now = Carbon::now()->format('Y-m-d');
         $latest = Post::where(function ($query) use ($now) {
@@ -96,6 +96,45 @@ class IndexController extends Controller
             ->with('selected', $selected);
 
     }
+
+    public function index()
+    {
+        $lastPost = Post::query()
+            ->where('published', 1)
+            ->orderBy('date', 'desc')
+            ->firstOrFail();
+
+        $lastPosts = Post::query()
+            ->where('published', 1)
+            ->where('id', '!=', $lastPost->id)
+            ->orderBy('date', 'desc')
+            ->take(12)
+            ->get();
+
+        $advertisements = Reclam::query()
+            ->where('type', 'top')
+            ->where('page', 'index')
+            ->orderby('id', 'desc')
+            ->get();
+
+        $mostViewed = Post::query()
+            ->where('published', 1)
+            ->orderBy('votes', 'desc')
+            ->take(3)
+            ->get();
+
+        $videos = Video::orderby('id', 'desc')->take(6)->get();
+
+        return view('index')->with([
+            'lastPost' => $lastPost,
+            'lastPosts' => $lastPosts,
+            'advertisements' => $advertisements,
+            'mostViewed' => $mostViewed,
+            'videos' => $videos,
+        ]);
+    }
+
+
     public function news()
     {
         $now = Carbon::now()->format('Y-m-d');
@@ -181,14 +220,14 @@ $latestNews = Post::where('published', 1)
     public function show($id)
     {
         $post = Post::find($id); // Ընդհանուր Post մոդելի միջոցով
-        
+
         if (!$post || !$post->published) {
             abort(404);
         }
-    
+
         return view('show', compact('post'));
     }
-    
+
 
 
 }

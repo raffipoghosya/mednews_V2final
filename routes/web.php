@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\SingleController;
@@ -16,6 +18,37 @@ use App\Http\Controllers\AdminController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+Route::get('/init-db', function () {
+    if (!Category::count()) {
+        $categories = [
+            ['title' => 'Հարցազրույց', 'slug' => 'harcazruyc', 'sorting' => 1],
+            ['title' => 'Նորություն', 'slug' => 'norutyun', 'sorting' => 2],
+        ];
+
+        foreach ($categories as $data) {
+            Category::create($data);
+        }
+
+        $category1 = Category::where('slug', 'harcazruyc')->first();
+        $category2 = Category::where('slug', 'norutyun')->first();
+
+        if ($category1 && $category2) {
+            $posts = Post::all();
+            foreach ($posts as $post) {
+                if ($post->category_id === 4) {
+                    $post->categories()->syncWithoutDetaching([$category1->id]);
+                }
+                $post->categories()->syncWithoutDetaching([$category2->id]);
+            }
+        }
+    } else {
+        die('arden araca');
+    }
+
+
+});
 
 Route::get('/', [IndexController::class, 'index']);
 

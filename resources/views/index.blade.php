@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/stylev2.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style_v2.css') }}">
     <link rel="stylesheet" href="{{ asset('css/reclam.css') }}">
     <link rel="stylesheet" href="{{ asset('css/news.css') }}">
     <link rel="stylesheet" href="{{ asset('css/videosc.css') }}">
@@ -23,32 +23,32 @@
                 <div class="left-banner">
                     <div class="image-wrapper">
                         <img id="main-img"
-                            src="{{ asset('images/posts/' . (optional($mainNews)->img ?? 'default.jpg')) }}"
-                            alt="{{ optional($mainNews)->title }}" class="banner-img"
+                            src="{{ asset('images/posts/' . (optional($lastPost)->img ?? 'default.jpg')) }}"
+                            alt="{{ optional($lastPost)->title }}" class="banner-img"
                             onerror="this.onerror=null;this.src='{{ asset('images/posts/default.jpg') }}';">
                         <div class="dot-indicators"></div>
                     </div>
 
-                    <h2 id="main-title" class="banner-title">{{ optional($mainNews)->title }}</h2>
+                    <h2 id="main-title" class="banner-title">{{ optional($lastPost)->title }}</h2>
                     <p id="main-text" class="banner-text">
-                        {!! Str::limit(strip_tags(optional($mainNews)->description), 460) !!}
-                        <a href="{{ route('news.show', optional($mainNews)->id) }}">Կարդալ ավելին</a>
+                        {!! Str::limit(strip_tags(optional($lastPost)->description), 460) !!}
+                        <a href="{{ route('news.show', optional($lastPost)->id) }}">Կարդալ ավելին</a>
                     </p>
                 </div>
 
                 <!-- Right Side: Doctors Grid -->
                 <div class="right-doctors">
                     <div class="doctors-grid">
-                        @foreach($doctors as $doctor)
-                            <div class="doctor-card" data-id="{{ $doctor->id }}" data-title="{{ $doctor->title }}"
-                                data-text="{{ strip_tags(Str::limit($doctor->description, 100)) }}"
-                                data-url="{{ route('news.show', $doctor->id) }}">
-                                <img src="{{ asset('images/posts/' . ($doctor->img ?? 'default.jpg')) }}"
-                                    alt="{{ $doctor->title }}"
+                        @foreach($lastPosts as $item)
+                            <div class="doctor-card" data-id="{{ $item->id }}" data-title="{{ $item->title }}"
+                                data-text="{{ strip_tags(Str::limit($item->description, 100)) }}"
+                                data-url="{{ route('news.show', $item->id) }}">
+                                <img src="{{ asset('images/posts/' . ($item->img ?? 'default.jpg')) }}"
+                                    alt="{{ $item->title }}"
                                     onerror="this.onerror=null;this.src='{{ asset('images/posts/default.jpg') }}';">
                                 <p id="main-text" class="banner-text">
-                                    {!! Str::limit(strip_tags(optional($mainNews)->description), 97) !!}
-                                    <a href="{{ route('news.show', optional($mainNews)->id) }}">Կարդալ ավելին</a>
+                                    {!! Str::limit(strip_tags(optional($lastPost)->description), 97) !!}
+                                    <a href="{{ route('news.show', optional($lastPost)->id) }}">Կարդալ ավելին</a>
                                 </p>
                             </div>
                         @endforeach
@@ -61,9 +61,9 @@
     <!-- Reclambanner -->
     <section class="ad-section">
         <div class="ad-banner">
-            @foreach($reclamtops as $key => $reclam)
-                <a href="{{ $reclam->href }}" target="_blank">
-                    <img src="{{ asset('images/reclam/' . $reclam->img) }}"
+            @foreach($advertisements as $key => $item)
+                <a href="{{ $item->href }}" target="_blank">
+                    <img src="{{ asset('images/reclam/' . $item->img) }}"
                         class="ad-image {{ $key === 0 ? 'active' : '' }}" alt="Ad {{ $key + 1 }}">
                 </a>
             @endforeach
@@ -77,17 +77,17 @@
             <div class="news-column">
                 <h1 class="news-heading"><a href="#">ԼՐԱՏՎՈՒԹՅՈՒՆ</a></h1>
                 <div class="news-group-card">
-                    @foreach($latestNews as $news)
+                    @foreach($lastPosts as $item)
                         <div class="news-card">
-                            <a href="{{ route('news.show', $news->id) }}">
-                                <img src="{{ asset('images/posts/' . ($news->img ?? 'default.jpg')) }}"
-                                    alt="{{ $news->title }}"
+                            <a href="{{ route('news.show', $item->id) }}">
+                                <img src="{{ asset('images/posts/' . ($item->img ?? 'default.jpg')) }}"
+                                    alt="{{ $item->title }}"
                                     onerror='this.onerror=null;this.src="{{ asset("images/posts/default.jpg") }}";'>
                             </a>
                             <div class="news-content">
-                                <h3><a href="{{ route('news.show', $news->id) }}">{{ $news->title }}</a></h3>
-                                <p>{{ Str::limit(strip_tags($news->description), 100) }}</p>
-                                <span class="news-date">{{ \Carbon\Carbon::parse($news->date)->format('d.m.y') }}</span>
+                                <h3><a href="{{ route('news.show', $item->id) }}">{{ $item->title }}</a></h3>
+                                <p>{{ Str::limit(strip_tags($item->description), 100) }}</p>
+                                <span class="news-date">{{ \Carbon\Carbon::parse($item->date)->format('d.m.y') }}</span>
                             </div>
                         </div>
                     @endforeach
@@ -98,17 +98,17 @@
             <div class="news-column">
                 <h1 class="news-heading"><a href="#">ԱՌԱՎԵԼ ԸՆԹԵՐՑՎԱԾ</a></h1>
                 <div class="news-group-card">
-                    @foreach($mostRead as $news)
+                    @foreach($mostViewed as $item)
                         <div class="news-card">
-                            <a href="{{ route('news.show', $news->id) }}">
-                                <img src="{{ asset('images/posts/' . ($news->img ?? 'default.jpg')) }}"
-                                    alt="{{ $news->title }}"
+                            <a href="{{ route('news.show', $item->id) }}">
+                                <img src="{{ asset('images/posts/' . ($item->img ?? 'default.jpg')) }}"
+                                    alt="{{ $item->title }}"
                                     onerror='this.onerror=null;this.src="{{ asset("images/posts/default.jpg") }}";'>
                             </a>
                             <div class="news-content">
-                                <h3><a href="{{ route('news.show', $news->id) }}">{{ $news->title }}</a></h3>
-                                <p>{{ Str::limit(strip_tags($news->description), 100) }}</p>
-                                <span class="news-date">{{ \Carbon\Carbon::parse($news->date)->format('d.m.y') }}</span>
+                                <h3><a href="{{ route('news.show', $item->id) }}">{{ $item->title }}</a></h3>
+                                <p>{{ Str::limit(strip_tags($item->description), 100) }}</p>
+                                <span class="news-date">{{ \Carbon\Carbon::parse($item->date)->format('d.m.y') }}</span>
                             </div>
                         </div>
                     @endforeach
@@ -144,7 +144,7 @@
     </section>
 
     @include('components.footer')
-   
+
 
 
        <!-- Video Modal -->
@@ -287,7 +287,7 @@
             checkArrows();
         });
     </script>
-  
+
 </body>
 
 </html>
