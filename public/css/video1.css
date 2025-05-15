@@ -1,0 +1,197 @@
+/* General container */
+.container, .container-fluid {
+    max-width: 100%;
+    padding: 0 40px;
+    margin: 0 auto;
+    padding-right: 40px !important;
+    padding-left: 40px!important;
+}
+
+/* Title */
+.section-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #833F6D;
+    margin-bottom: 30px;
+}
+
+/* Video Gallery Section */
+.video-gallery {
+    padding: 20px 15px;
+    background-color: #fafafa;
+}
+
+.video-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* ✅ Exactly 5 columns */
+    gap: 20px;
+}
+
+.video-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+}
+
+.video-thumb {
+    position: relative;
+    width: 100%;
+    height: 200px; /* ✅ Ֆիքսված բարձրություն բոլոր տեսանյութերի համար */
+    overflow: hidden;
+}
+
+.video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 100%;
+    padding: 10px;
+}
+
+.video-card p {
+    font-size: 16px;
+    padding: 10px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Shorts Section */
+.video-short-section {
+    padding: 40px 0;
+    background-color: #f4f4f4;
+}
+
+.video-short-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* ✅ 5 columns for shorts */
+    gap: 20px;
+}
+
+.video-card-short {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.video-card-short:hover {
+    transform: translateY(-5px);
+}
+
+.video-card-short .video-thumb {
+    position: relative;
+    width: 100%;
+    height: 300px; /* ✅ Նույն ֆիքսված բարձրությունը նաև shorts-ի համար */
+    overflow: hidden;
+}
+
+.video-card-short .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-card-short .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.video-card-short p {
+    font-size: 16px;
+    padding: 10px;
+    color: #333;
+    font-weight: bold;
+}
+
+ul.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    list-style: none;
+    padding: 0;
+}
+
+ul.pagination li {
+    margin: 0 5px;
+}
+
+ul.pagination li a,
+ul.pagination li span {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid transparent;
+    color: #555;
+    text-decoration: none;
+    border-radius: 50%;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    min-width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 18px;
+}
+
+ul.pagination li.active span {
+    background-color: #833F6D;
+    color: white;
+    font-weight: bold;
+}
+
+ul.pagination li a:hover {
+    background-color: #f3f3f3;
+}
+
+ul.pagination li.disabled span {
+    color: #aaa;
+}
+
+
+/* Responsive */
+@media screen and (max-width: 1400px) {
+    .video-container,
+    .video-short-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+@media screen and (max-width: 1100px) {
+    .video-container,
+    .video-short-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media screen and (max-width: 768px) {
+    .video-container,
+    .video-short-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (max-width: 500px) {
+    .video-container,
+    .video-short-container {
+        grid-template-columns: 1fr;
+    }
+}

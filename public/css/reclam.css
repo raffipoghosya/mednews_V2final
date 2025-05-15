@@ -1,0 +1,36 @@
+/* Advertisement Section */
+.ad-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1px;
+    padding: 10px 20px 20px;
+    box-sizing: border-box;
+}
+
+.ad-banner {
+    width: 100%;
+    max-width: 1393px;
+    height: 371px;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ad-banner img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 371px;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    z-index: 0;
+}
+
+.ad-banner img.active {
+    opacity: 1;
+    z-index: 1;
+    position: relative;
+}

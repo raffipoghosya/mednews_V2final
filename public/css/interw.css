@@ -1,0 +1,319 @@
+/* Reset and base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #fafafa;
+    color: #222;
+}
+
+/* Container with flex layout */
+.container {
+    display: flex;
+    gap: 3rem;
+    padding: 20px;
+    position: relative;
+}
+
+/* Vertical separator line between news and videos */
+.separator-line {
+    width: 1px;
+    background-color: #ddd;
+    margin: 0 20px;
+}
+/* News Column */
+.news-column {
+    flex: 0.3 1 40%;
+}
+
+/* News heading style */
+.news-heading a {
+    font-size: 26px;
+    font-weight: bold;
+    color: #833F6D;
+    text-decoration: none;
+    margin-bottom: 25px;
+    display: inline-block;
+}
+
+/* News cards container */
+.news-group-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Each news card */
+.news-card {
+    width: 100%;
+    display: flex;
+    background-color: #f5f5f7;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.news-card:hover {
+    box-shadow: 0 5px 15px rgba(131,63,109,0.3);
+}
+
+/* News image */
+.news-card img {
+    width: 140px;
+    height: 140px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* Content next to image */
+.news-content {
+    margin-left: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Title */
+.news-content h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: #333;
+}
+
+.news-content h3 a {
+    color: #833F6D;
+    text-decoration: none;
+}
+
+.news-content h3 a:hover {
+    text-decoration: underline;
+}
+
+/* Description */
+.news-content p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+/* Date */
+.news-date {
+    font-size: 13px;
+    color: #999;
+    align-self: flex-end;
+}
+
+/* Pagination container */
+.pagination-container {
+    margin-top: 30px;
+}
+
+.container {
+    display: flex;
+    gap: 3rem;
+    padding: 20px;
+}
+/* Pagination styles */
+.pagination {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    gap: 10px;
+    padding-left: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.pagination li {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #f7f5fa;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pagination li a,
+.pagination li span {
+    color: #8c6a8a;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding: 5px 7px;
+    margin-left: -1px;
+    line-height: 18px;
+    border-radius: 50%;
+    user-select: none;
+}
+
+.pagination li a:hover {
+    background-color: #8c6a8a;
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(140, 106, 138, 0.4);
+}
+
+.pagination li.active span {
+    background-color: #8c6a8a;
+    color: #fff;
+    cursor: default;
+    box-shadow: 0 5px 12px rgba(140, 106, 138, 0.6);
+}
+
+.pagination li.disabled span {
+    color: #c9c6d1;
+    cursor: not-allowed;
+    background-color: #fdfcff;
+}
+
+.pagination li.disabled span:hover {
+    background-color: #fdfcff;
+    box-shadow: none;
+}
+
+.pagination li.disabled span {
+    font-weight: 600;
+    font-size: 18px;
+    color: #ccc;
+}
+
+.pagination li:first-child a,
+.pagination li:last-child a {
+    font-weight: 600;
+    font-size: 20px;
+    user-select: none;
+}
+
+/* Right column styles */
+.ads-column {
+    flex: 0 0 25%;
+    display: flex;
+    flex-direction: column;  /* Որ տեսանյութերն ու ռեկլամները ուղղահայաց դասավորվեն */
+    padding-left: 20px;
+}
+
+
+/* Section title */
+.section-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #833F6D;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+/* Video slider wrapper */
+.slider-wrapper {
+    overflow: hidden;
+    margin-bottom: 30px; /* Արդեն որ ռեկլամները չգրկեն վիդեոների հետ */
+}
+
+/* Track vertically stacked */
+.slider-track {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.ad-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+/* Each video card */
+.video-card {
+    /* display: flex; */
+    gap: 10px;
+    background: #f5f5f7;
+    border-radius: 12px;
+    padding: 10px;
+    align-items: center;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+.video-card:hover {
+    box-shadow: 0 5px 15px rgba(131,63,109,0.3);
+}
+
+.video-thumb {
+    position: relative;
+    flex-shrink: 0;
+    width: 100%;
+    height: 170px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Play button centered */
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: white;
+    pointer-events: none;
+}
+
+/* Video title */
+.video-card p {
+    font-weight: 600;
+    font-size: 15px;
+    color: #333;
+    margin-top: 8px;
+}
+.ad-items{
+    margin-right: 0;
+    margin-top: 6%;
+}
+/* Ad item */
+.ad-item img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+}
+
+/* Responsive */
+@media (min-width: 1200px) {
+    .container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .news-column, .ads-column {
+        flex: 1 1 100%;
+    }
+    .video-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .video-thumb {
+        width: 100%;
+        height: auto;
+    }
+}

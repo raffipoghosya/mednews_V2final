@@ -1,378 +1,293 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>MedNews</title>
-        <!-- Google Tag Manager -->
-        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-TJVXTQT');</script>
-        <!-- End Google Tag Manager -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link href="css/style.css" rel="stylesheet" type="text/css"/>
-        <meta name="keyword" content="mednews, մեդնյուզ բժշկական, բժշկություն, նորություններ, բժշկական նորություններ, առողջություն, առողջապահություն, առողջապահական համակարգ, բժիշկ, ախտորոշում, բուժում, հիվանդություն, քաղցկեղ, հետազոտություն, խորհրդատվություն, մասնագետ,   էսթետիկ բժշկություն, իմ բժիշկը,  med, medical, bjshkutyun, aroxjutyun, axtoroshum, bujum, hetazotutyun, doctor, doctors, endokrin virabuyj, sirt-anotayin, plastic virabuyj, srtaban, vnasvacqaban, naxanshan, revmatolog, ortoped, virabuyj, վիրաբուժ, վիրահատություն, լապարասկոպիկ, էնդոսկոպիկ, anotayin, անոթային վիրաբույժ, ասոցացիա, ստոմատոլոգ, ուռուցքաբանություն, ստենտավորում, քաղցկեղային, ակնաբույժ, գինեկոլոգ, ընդհանուր վիրաբույժ, հիվանդանոց, բժշկական կենտրոն, medical center, hivandanoc, hivandutyun, hivand, pacient, bjshkakan kentron, stom, klinika, clinics, laborator, laboratoriA, լաբորատորիա, անալիզ, analiz, konsultacia, բժշկի կոնսուլտացիա, ուռուցք, rak, urucq, mankakan, մանկական, լուրեր, news">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    </head>
-    <body>
-        <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TJVXTQT"
-        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-        <!-- End Google Tag Manager (noscript) -->
-        <div class="container-fluid">
-            <div class="row header">
-                <div class="mycont">
-                    <div class="col-md-3 col-xs-3 logoarea">
-                        <a href="/"><img src="images/logo.png" alt=""/></a>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/stylev2.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/reclam.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/news.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/videosc.css') }}">
+    <title>Document</title>
+</head>
+
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+    @include('components.header')
+
+    @php $fallback = asset('images/posts/default.jpg'); @endphp
+
+    <main>
+        <section class="main-banner-section">
+            <div class="container-two-column">
+                <!-- Left Side: Main News -->
+                <div class="left-banner">
+                    <div class="image-wrapper">
+                        <img id="main-img"
+                            src="{{ asset('images/posts/' . (optional($mainNews)->img ?? 'default.jpg')) }}"
+                            alt="{{ optional($mainNews)->title }}" class="banner-img"
+                            onerror="this.onerror=null;this.src='{{ asset('images/posts/default.jpg') }}';">
+                        <div class="dot-indicators"></div>
                     </div>
-                    <div class="col-md-9 col-xs-9 text-right">
-                        <ul class="menu-nav">
-                            @foreach($cats as $cat)
-                            @if($cat->menu == '1')
-                            <li><a href="/catpage/{{$cat->id}}"><i class="fa fa-circle" aria-hidden="true"></i>{{$cat->name}}</a></li>
-                            @endif
-                            @endforeach
-                        </ul>
-                        <div class="dropdown mobile-nav">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
-                            </button>
-                            <div class="dropdown-menu mymobile" aria-labelledby="dropdownMenuButton">
-                                <ul>
-                                    @foreach($cats as $cat)
-                                    @if($cat->menu == '1')
-                                    <li><a href="/catpage/{{$cat->id}}">{{$cat->name}}</a></li>
-                                    @endif
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+
+                    <h2 id="main-title" class="banner-title">{{ optional($mainNews)->title }}</h2>
+                    <p id="main-text" class="banner-text">
+                        {!! Str::limit(strip_tags(optional($mainNews)->description), 460) !!}
+                        <a href="{{ route('news.show', optional($mainNews)->id) }}">Կարդալ ավելին</a>
+                    </p>
                 </div>
-            </div>
-            <div class="row banner">
-                <div class="mycont">
-                    <div class="col-md-6 col-sm-6 col-xs-12 top-banner">
-                        <div class="row big-img" id="bigimg0">
-                            <img src="images/posts/{{$tops[0]->img}}">
-                        </div>
-                        @foreach($tops as $key => $top)
-                            @if($key != 0)
-                            <div class="row big-img" id="bigimg{{$key}}">
-                                <img src="images/posts/{{$top->img}}">
+
+                <!-- Right Side: Doctors Grid -->
+                <div class="right-doctors">
+                    <div class="doctors-grid">
+                        @foreach($doctors as $doctor)
+                            <div class="doctor-card" data-id="{{ $doctor->id }}" data-title="{{ $doctor->title }}"
+                                data-text="{{ strip_tags(Str::limit($doctor->description, 100)) }}"
+                                data-url="{{ route('news.show', $doctor->id) }}">
+                                <img src="{{ asset('images/posts/' . ($doctor->img ?? 'default.jpg')) }}"
+                                    alt="{{ $doctor->title }}"
+                                    onerror="this.onerror=null;this.src='{{ asset('images/posts/default.jpg') }}';">
+                                <p id="main-text" class="banner-text">
+                                    {!! Str::limit(strip_tags(optional($mainNews)->description), 97) !!}
+                                    <a href="{{ route('news.show', optional($mainNews)->id) }}">Կարդալ ավելին</a>
+                                </p>
                             </div>
-                            @endif
-                        @endforeach                        
-                        <div class="row top">
-                            <div class="col-md-4 col-xs-4" id="top0">
-                                <a href="/single/{{$tops[0]->id}}">
-                                    <p class="small smalldate">{{$tops[0]->date}}</p>
-                                    <p>{{$tops[0]->title}}</p>
-                                </a>
-                            </div>
-                            @foreach($tops as $key => $top)
-                            @if($key != 0)
-                            <div class="col-md-4 col-xs-4" id="top{{$key}}">
-                                <a href="/single/{{$top->id}}">
-                                    <p class="small smalldate">{{$top->date}}</p>
-                                    <p>{{$top->title}}</p>
-                                </a>
-                            </div>
-                            @endif
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-12 selectedblock">
-                        <div class="row section">
-                            <div class="col-md-12 vertical-sect">
-                                <a href="/single/{{$selected->id}}">
-                                    <img src="images/posts/{{$selected->img}}" class="img-responsive" alt=""/>
-                                    <p style="margin-top:10px;"><b>{{$selected->title}}</b></p>
-                                    <p>{!!$selected->anons!!}</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-12" style="height:100%;overflow: hidden;padding-top:10px;position:relative;">
-                        <button id="openform" class="btn mybtn" style="position:absolute;top:10px;right:23px;"><i class="fa fa-search" aria-hidden="true"></i></button>
-                        <div class="row" style="position: absolute;top: 10px;width: 98%;">
-                            <div class="col-md-12" id="noneform" style="display:none;">
-                                <form action="/search" method="post" class="searchform" style="width:100%;">
-                                    {{ csrf_field() }}
-                                    <div class="input-group text-right" style="width:100%;">
-                                        <input type="text" name="search" class="form-control" placeholder="Փնտրել">
-                                        <button type="submit" class="btn mybtn"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="latest">
-                            <div class="col-md-12 text-left sect-title" style="margin-top:0;">Լրահոս</div>
-                            @foreach($latest as $last)
-                            <div class="last">
-                                <a href='/single/{{$last->id}}'>
-                                <div class="last-imgarea text-center">
-                                    <img src="images/posts/{{$last->img}}" class="img-responsive" alt=""/>
-                                </div>
-                                <div class="last-content">
-                                    <div class="small smalldate">{{$last->date}}</div>
-                                    <div style="font-size:12px;word-break: break-word;"><b style="overflow: hidden;display: -webkit-box;-webkit-line-clamp: 4;-webkit-box-orient: vertical;">{{$last->title}}</b></div>
-                                    <!--<div class="small last-text">{!!$last->anons!!}</div>-->
-                                </div>
-                                </a>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="row category">
-                <div class="mycont">                    
-                    <div class="col-md-6 col-xs-12 reclam-top-siaze">
-                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="item active">
-                                    <a href="#">
-                                        <video width="100%" height="240" autoplay muted>
-                                          <source src="images/reclam/rec.mp4" type="video/mp4">
-                                        </video>
-                                    </a>
-                                </div>
-                                @foreach($reclamtops as $key => $reclam)
-                                    @if($key == 0)
-                                        <div class="item">
-                                            <a href="{{$reclam->href}}">
-                                                <img src="images/reclam/{{$reclam->img}}" class="img-responsive" alt=""/>
-                                            </a>
-                                        </div>
-                                    @endif
-                                @endforeach
-                                @foreach($reclamtops as $key => $reclam)
-                                    @if($key != 0)
-                                        <div class="item">
-                                            <a href="{{$reclam->href}}">
-                                                <img src="images/reclam/{{$reclam->img}}" class="img-responsive" alt=""/>
-                                            </a>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>                        
-                    <div class="col-md-6 col-xs-12 mycatsdiv">
-                        <ul class="cat-nav">
-                            @foreach($cats as $cat)
-                            @if($cat->menu == '0')
-                            <li><a href="/catpage/{{$cat->id}}"><i class="fa fa-circle" aria-hidden="true"></i>{{$cat->name}}</a></li>
-                            @endif
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row sections">
-                <div class="mycont">
-                    <div class="mysectwidth">
-                        @foreach($category as $key => $cat)
-                        <div class="row section">
-                            <a style="float:none;" href="/catpage/{{$cat->id}}"><div class="col-md-12 text-left sect-title">{{$cat->name}}</div></a>
-                            <div class="clearfix"></div>
-                                @foreach($catnews[$key] as $catnew)
-                                    @if($cat->id == $catnew->category_id)
-                                        <div class="col-md-4 col-xs-4 section" style="height:250px;position: relative;overflow: hidden;padding:0 5px;"><a href="/single/{{$catnew->id}}" style="color:black;text-decoration:none;">
-                                            <div class="sectimg-area" style="background:url('../images/posts/{{$catnew->img}}') no-repeat;margin-bottom:10px;"></div>
-                                            <div style="margin-bottom:10px;font-size:12px;margin-bottom:5px;"><b>{{$catnew->title}}</b></div>
-                                            <!--<div class="large-text">{!!$catnew->anons!!}</div>-->
-                                        </a></div>
-                                    @endif
-                                @endforeach
-                        </div> 
                         @endforeach
                     </div>
-                    <div class="mysectwidth">
-                        <div class="row">
-                            <div class="myharc">
-                                <div class="row section">
-                                    <div class="col-md-12 text-left sect-title">{{$topcats->name}}</div>
-                                    @foreach($toppost as $post)
-                                    <div class="col-md-12 vertical-sect">
-                                        <a style="float: none;" href="/single/{{$post->id}}">
-                                            <img src="images/posts/{{$post->img}}" class="img-responsive" style="margin-bottom:10px;" alt=""/>
-                                            <div style="font-size:12px;margin-bottom:5px;"><b>{{$post->title}}</b></div>
-                                            <div class="large-text" style="max-height: 130px;-webkit-line-clamp: 8;">{!!$post->anons!!}</div>
-                                        </a>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="mymost">
-                                <div class="row">
-                                    <div class="col-md-12 text-left sect-title" style="padding-left:0;">Առավել ընթերցված</div>
-                                    @foreach($mostviewed as $most)
-                                    <div class="col-md-12 vertical-sect mymostviewed">
-                                        <a href="/single/{{$most->id}}">
-                                        <img src="images/posts/{{$most->img}}" alt=""/>
-                                        <div style="font-size:12px;"><b>{{$most->title}}</b></div>
-                                        </a>
-                                    </div>
-                                    @endforeach
-                                </div>
-                                <div class="row bottom-reclam">
-                            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="item active">
-                                        @foreach($reclambottoms as $key => $reclam)
-                                        @if($key == 0)
-                                        <a href="{{$reclam->href}}">
-                                            <img src="images/reclam/{{$reclam->img}}" class="img-responsive" alt=""/>
-                                        </a>
-                                        @endif
-                                        @endforeach
-                                    </div>
-                                    @foreach($reclambottoms as $key => $reclam)
-                                    @if($key != 0)
-                                    <div class="item">
-                                        <a href="{{$reclam->href}}">
-                                            <img src="images/reclam/{{$reclam->img}}" class="img-responsive" alt=""/>
-                                        </a>
-                                    </div>
-                                    @endif
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row calendar" style="padding-top:20px;">
-                            <form action="/datesearch" method="post" class="form-inline">
-                                {{ csrf_field() }}
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input type="date" name="date" data-date-inline-picker="true" class="form-control">                                
-                                    </div>
-                                    <input type="submit" class="btn btn-primary" value="Որոնել" style="background:#b760a5;color:white;border:1px solid #b760a5;">
-                                </div>
-                            </form> 
-                        </div>
-                            </div>
-                        </div>
-                        
-                    </div>  
                 </div>
             </div>
-            <div class="row social">
-                <div class="mycont">
-                    <div class="col-md-6 col-md-offset-3 text-center">
-                        <hr/>
-                        <div class="social-bg">
-                            <a href="#"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row gallery">
-                <div class="mycont">
-                    <div class="col-md-12 text-right sect-title">Տեսադարան</div>
-                    <div class="clearfix"></div>
-                    @foreach($videos as $video)
-                    <div class="col-md-2 col-xs-6 text-left" data-toggle="modal" data-target="#myModal{{$video->id}}" style="cursor: pointer;height: 220px;">
-                        <div class="sectimg-area" style="background:url('../images/videos/{{$video->img}}') no-repeat;"></div>
-                        <div class="video-title">
-                            <div>{!!$video->title!!}</div>
-                            <!--<div class="small last-text">{!!$video->description!!}</div>-->
-                        </div>
-                    </div>
-                    <div id="myModal{{$video->id}}" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
+        </section>
+    </main>
 
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">{{$video->title}}</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>{!!$video->iframe!!}</p>
-                                </div>
-                            </div>
+    <!-- Reclambanner -->
+    <section class="ad-section">
+        <div class="ad-banner">
+            @foreach($reclamtops as $key => $reclam)
+                <a href="{{ $reclam->href }}" target="_blank">
+                    <img src="{{ asset('images/reclam/' . $reclam->img) }}"
+                        class="ad-image {{ $key === 0 ? 'active' : '' }}" alt="Ad {{ $key + 1 }}">
+                </a>
+            @endforeach
+        </div>
+    </section>
 
+    <!-- News Section -->
+    <section class="news-section">
+        <div class="news-container">
+            <!-- Left Column -->
+            <div class="news-column">
+                <h1 class="news-heading"><a href="#">ԼՐԱՏՎՈՒԹՅՈՒՆ</a></h1>
+                <div class="news-group-card">
+                    @foreach($latestNews as $news)
+                        <div class="news-card">
+                            <a href="{{ route('news.show', $news->id) }}">
+                                <img src="{{ asset('images/posts/' . ($news->img ?? 'default.jpg')) }}"
+                                    alt="{{ $news->title }}"
+                                    onerror='this.onerror=null;this.src="{{ asset("images/posts/default.jpg") }}";'>
+                            </a>
+                            <div class="news-content">
+                                <h3><a href="{{ route('news.show', $news->id) }}">{{ $news->title }}</a></h3>
+                                <p>{{ Str::limit(strip_tags($news->description), 100) }}</p>
+                                <span class="news-date">{{ \Carbon\Carbon::parse($news->date)->format('d.m.y') }}</span>
+                            </div>
                         </div>
-                    </div>
-                    @endforeach       
+                    @endforeach
                 </div>
             </div>
-            <div class="row footer text-center">                
-                <img src="images/logo.png" alt=""/>
-                <div class="col-md-12 text-center footer-menu">
-                    <ul class="menu-nav">
-                            @foreach($cats as $cat)
-                            @if($cat->menu == '1')
-                            <li><a href="/catpage/{{$cat->id}}"><i class="fa fa-circle" aria-hidden="true"></i>{{$cat->name}}</a></li>
-                            @endif
-                            @endforeach
-                        </ul>
+
+            <!-- Right Column -->
+            <div class="news-column">
+                <h1 class="news-heading"><a href="#">ԱՌԱՎԵԼ ԸՆԹԵՐՑՎԱԾ</a></h1>
+                <div class="news-group-card">
+                    @foreach($mostRead as $news)
+                        <div class="news-card">
+                            <a href="{{ route('news.show', $news->id) }}">
+                                <img src="{{ asset('images/posts/' . ($news->img ?? 'default.jpg')) }}"
+                                    alt="{{ $news->title }}"
+                                    onerror='this.onerror=null;this.src="{{ asset("images/posts/default.jpg") }}";'>
+                            </a>
+                            <div class="news-content">
+                                <h3><a href="{{ route('news.show', $news->id) }}">{{ $news->title }}</a></h3>
+                                <p>{{ Str::limit(strip_tags($news->description), 100) }}</p>
+                                <span class="news-date">{{ \Carbon\Carbon::parse($news->date)->format('d.m.y') }}</span>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
-        <script>
-        $('#openform').click(function() {
-            $('#noneform').css({
-                'display': 'block'
+    </section>
+
+    <!-- Videos Section -->
+    <section class="video-slider-section">
+        <h2 class="section-title">ՏԵՍԱՆՅՈՒԹԵՐ</h2>
+        <button class="slider-btn prev" id="prevBtn" disabled>
+            <img src="{{ asset('style/left.svg') }}" alt="Left Arrow">
+        </button>
+        <div class="slider-wrapper">
+            <div class="slider-track">
+                @foreach($videos as $video)
+                    <div class="video-card" data-video="{{ $video->link }}">
+                        <div class="video-thumb" style="cursor: pointer;">
+                            <img src="{{ asset('images/videos/' . ($video->img ?? 'default.jpg')) }}"
+                                alt="{{ $video->title }}">
+                            <div class="play-button">&#9658;</div>
+                        </div>
+                        <p>{{ $video->title }}</p>
+                    </div>
+                @endforeach
+
+            </div>
+        </div>
+        <button class="slider-btn next" id="nextBtn">
+            <img src="{{ asset('style/right.svg') }}" alt="Right Arrow">
+        </button>
+    </section>
+
+    @include('components.footer')
+   
+
+
+       <!-- Video Modal -->
+       <!-- <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="background: #000;">
+                <div class="modal-body" style="position: relative; padding: 0;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        style="position: absolute; top: 10px; right: 15px; color: white; z-index: 9999;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="video-container"
+                        style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                        <iframe id="videoFrame" width="100%" height="100%" frameborder="0" allowfullscreen
+                            style="position: absolute; top: 0; left: 0;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const videoCards = document.querySelectorAll('.video-card');
+
+            videoCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const videoSrc = card.getAttribute('data-video');
+                    if (!videoSrc) return alert("Տեսանյութի հղումը բացակայում է։");
+
+                    let embedLink = '';
+
+                    if (videoSrc.includes("youtube.com/watch?v=")) {
+                        embedLink = videoSrc.replace("watch?v=", "embed/");
+                    } else if (videoSrc.includes("youtu.be/")) {
+                        const id = videoSrc.split("youtu.be/")[1];
+                        embedLink = "https://www.youtube.com/embed/" + id;
+                    } else if (videoSrc.includes("youtube.com/embed/")) {
+                        embedLink = videoSrc;
+                    } else {
+                        return alert("Տեսանյութի հղումը սխալ է։");
+                    }
+
+                    document.getElementById('videoFrame').src = embedLink + '?autoplay=1';
+                    $('#videoModal').modal('show');
+                });
+            });
+
+            $('#videoModal').on('hidden.bs.modal', function () {
+                document.getElementById('videoFrame').src = '';
             });
         });
-        </script>
-        <script>
-        $(function(){
-            $('.carousel').carousel({
-              interval: 15000
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const doctorCards = document.querySelectorAll('.doctor-card');
+            const mainImg = document.getElementById('main-img');
+            const mainTitle = document.getElementById('main-title');
+            const mainText = document.getElementById('main-text');
+            const dotContainer = document.querySelector('.dot-indicators');
+
+            if (!doctorCards.length) return;
+
+            let index = 0;
+
+            doctorCards.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.dataset.index = i;
+                dot.addEventListener('click', () => {
+                    index = i;
+                    showSlide(index);
+                });
+                dotContainer.appendChild(dot);
             });
+
+            function showSlide(i) {
+                const card = doctorCards[i];
+                const imgSrc = card.querySelector('img').src;
+                const title = card.dataset.title || 'Բժիշկ';
+                const text = card.dataset.text || 'Բժշկական գիտական միության ղեկավար';
+                const url = card.dataset.url || '#';
+
+                mainImg.src = imgSrc;
+                mainTitle.textContent = title;
+                mainText.innerHTML = text + ` <a href="${url}">Կարդալ ավելին</a>`;
+
+                document.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
+                document.querySelectorAll('.dot')[i].classList.add('active');
+            }
+
+            setInterval(() => {
+                index = (index + 1) % doctorCards.length;
+                showSlide(index);
+            }, 5000);
         });
-        </script>
-        <script>
-        $(document).ready(function(){
-            foo();            
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const adImages = document.querySelectorAll('.ad-banner img');
+            let currentAd = 0;
+
+            if (adImages.length > 0) {
+                setInterval(() => {
+                    adImages[currentAd].classList.remove('active');
+                    currentAd = (currentAd + 1) % adImages.length;
+                    adImages[currentAd].classList.add('active');
+                }, 5000);
+            }
         });
-        function foo(){
-            setTimeout(function(){
-             $('#top0').addClass('active');
-             $('#bigimg0').addClass('show');
-        },0);
 
-        setTimeout(function(){
-             $('#top0').removeClass('active');
-             $('#bigimg0').removeClass('show');
-        },5000);
-        
+        document.addEventListener("DOMContentLoaded", function () {
+            const sliderTrack = document.querySelector('.slider-track');
+            const prevBtn = document.querySelector('.slider-btn.prev');
+            const nextBtn = document.querySelector('.slider-btn.next');
+            let scrollAmount = 0;
+            const cardWidth = document.querySelector('.video-card').offsetWidth + 20;
 
-        setTimeout(function(){
-             $('#top1').addClass('active');
-             $('#bigimg1').addClass('show');
-        },5000);
+            nextBtn.addEventListener('click', () => {
+                scrollAmount += cardWidth;
+                if (scrollAmount >= sliderTrack.scrollWidth - sliderTrack.offsetWidth) {
+                    scrollAmount = sliderTrack.scrollWidth - sliderTrack.offsetWidth;
+                }
+                sliderTrack.style.transform = `translateX(-${scrollAmount}px)`;
+                checkArrows();
+            });
 
-        setTimeout(function(){
-             $('#top1').removeClass('active');
-             $('#bigimg1').removeClass('show');
-        },10000);
-        
+            prevBtn.addEventListener('click', () => {
+                scrollAmount -= cardWidth;
+                if (scrollAmount < 0) scrollAmount = 0;
+                sliderTrack.style.transform = `translateX(-${scrollAmount}px)`;
+                checkArrows();
+            });
 
-        setTimeout(function(){
-             $('#top2').addClass('active');
-             $('#bigimg2').addClass('show');
-        },10000);
+            function checkArrows() {
+                prevBtn.disabled = scrollAmount === 0;
+                nextBtn.disabled = scrollAmount >= (sliderTrack.scrollWidth - sliderTrack.offsetWidth);
+            }
 
-        setTimeout(function(){
-             $('#top2').removeClass('active');
-             $('#bigimg2').removeClass('show');
-        },15000);
-        
-            setTimeout(foo, 15000);
-        }
-        </script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    </body>
+            checkArrows();
+        });
+    </script>
+  
+</body>
+
 </html>

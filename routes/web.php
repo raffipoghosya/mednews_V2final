@@ -18,7 +18,18 @@ use App\Http\Controllers\AdminController;
 */
 
 Route::get('/', [IndexController::class, 'index']);
-Route::get('/single/{id}', [SingleController::class, 'index']);
+
+Route::get('/news', [IndexController::class, 'news']);
+Route::get('/interview', [IndexController::class, 'interview']);
+Route::get('/videos', [IndexController::class, 'videos']);
+
+
+Route::get('/single/{id}', [IndexController::class, 'show'])->name('news.show');
+
+
+
+
+// Route::get('/single/{id}', [SingleController::class, 'index']);
 Route::get('/catpage/{id}', [CatController::class, 'index']);
 
 Route::post('/search', [SearchController::class, 'index']);

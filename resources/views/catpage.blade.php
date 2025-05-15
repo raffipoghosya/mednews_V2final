@@ -146,7 +146,7 @@
                             </div>
                             @endforeach
                         @endif
-                        <div class="row text-center">{!! $recomented->links(); !!}</div>
+                        <div class="row text-center">{!! $recomented->links() !!}</div>
                     </div>
                     <div class="col-md-3">
                         <div class="col-md-12 vertical-sect">

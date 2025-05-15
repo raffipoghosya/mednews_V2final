@@ -1,0 +1,160 @@
+
+/* Footer */
+/* Footer */
+/* Footer */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+footer {
+    background-color: #833F6D;
+    color: white;
+    padding: 20px 0;
+    width: 100%;
+    border-top: 2px solid white;
+    box-sizing: border-box;
+    z-index: 1;
+    margin-top: auto; /* սա է կարևոր մասը */
+}
+
+
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* padding: -1px 12px; */
+}
+
+/* Footer links */
+.footer-left {
+    flex: 1;
+}
+
+.footer-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    position: relative;
+    padding-left: 20px;
+}
+
+.footer-links li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.footer-links a:hover {
+    color: #c1a2b3;
+}
+
+/* Contact info and logos */
+.footer-right {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    flex: 1.5;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.contact-info {
+    padding: 0 50px;
+    border-left: 2px solid white;
+    border-right: 2px solid white;
+}
+
+.contact-info p {
+    font-size: 14px;
+    margin: 2px 0;
+}
+
+/* Logos */
+.logos {
+    display: flex;
+    gap: 10px;
+}
+
+.logos img {
+    height: 35px;
+    object-fit: contain;
+}
+
+.second-logo {
+    height: 40px;
+}
+
+/* @Yweb position */
+.yweb-text {
+    position: absolute;
+    right: -120px;
+    bottom: 0;
+    font-size: 14px;
+    padding-right: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    footer {
+        position: static;
+        height: auto;
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    .footer-content {
+        bottom: 50%;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .footer-left,
+    .footer-right {
+        justify-content: center;
+        flex: 1 1 100%;
+    }
+
+    .footer-links {
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .contact-info {
+        border: none;
+        padding: 0;
+    }
+
+    .yweb-text {
+        position: static;
+        padding: 0;
+    }
+
+    .logos {
+        justify-content: center;
+    }
+}
