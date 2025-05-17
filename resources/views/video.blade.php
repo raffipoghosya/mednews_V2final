@@ -14,33 +14,44 @@
     @include('components.header')
 
     <div class="container-fluid">
-        <!-- Video Gallery Section -->
-        <section class="video-gallery">
-            <h2 class="section-title">ՏԵՍԱՆՅՈՒԹԵՐ</h2>
-            <div class="video-container">
-                @for ($i = 0; $i < 20; $i++)
-                    @php $vid = $video[$i % count($video)]; @endphp
-                    <div class="video-card">
-                        <div class="video-thumb">
-                            <img src="{{ asset('images/videos/' . $vid->img) }}" alt="Video" />
-                            <div class="play-button">&#9658;</div>
-                        </div>
-                        <p>{{ $vid->title }} / {{ $vid->author }}</p>
-                    </div>
-                @endfor
-            </div>
-        </section>
 
-        <!-- Shorts Section -->
-        <!-- Shorts Section -->
+        <!-- Video Gallery Section (slider) -->
+        <section class="video-gallery">
+    <h2 class="section-title">ՏԵՍԱՆՅՈՒԹԵՐ</h2>
+    <div class="video-container">
+        @for ($i = 0; $i < 20; $i++)
+            @php 
+                $vid = $video[$i % count($video)]; 
+                // iframe-ից կամ video_url-ից վիդեո src-ը հանում ենք
+                preg_match('/src="([^"]+)"/', $vid->iframe ?? '', $matches);
+                $videoSrc = $matches[1] ?? ($vid->video_url ?? '');
+            @endphp
+            <div class="video-card" data-video="{{ $videoSrc }}" data-title="{{ $vid->title }}" style="cursor: pointer;">
+                <div class="video-thumb">
+                    <img src="{{ asset('images/videos/' . $vid->img) }}" alt="Video" />
+                    <div class="play-button">&#9658;</div>
+                </div>
+                <p>{{ $vid->title }} / {{ $vid->author }}</p>
+            </div>
+        @endfor
+    </div>
+</section>
+
+
+
         <!-- Shorts Section -->
         <section class="video-short-section">
             <h2 class="section-title">SHORTS</h2>
             <div class="video-short-container">
                 @foreach($shorts as $short)
-                    <div class="video-card-short">
+                    @php
+                        preg_match('/src="([^"]+)"/', $short->iframe ?? '', $matches);
+                        $shortVideoSrc = $matches[1] ?? ($short->video_url ?? '');
+                    @endphp
+
+                    <div class="video-card-short" data-video="{{ $shortVideoSrc }}" data-title="{{ $short->title }}" style="cursor: pointer;">
                         <div class="video-thumb">
-                            <img src="{{ asset('images/videos/' . $short->img) }}" alt="Video" />
+                            <img src="{{ asset('images/videos/' . ($short->img ?? 'default.jpg')) }}" alt="{{ $short->title }}" />
                             <div class="play-button">&#9658;</div>
                         </div>
                         <p>{{ $short->title }} / {{ $short->author }}</p>
@@ -100,8 +111,47 @@
 
     @include('components.footer')
 
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="videoModalLabel">Տեսանյութ</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Փակել">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe id="videoFrame" class="embed-responsive-item" src="" allowfullscreen allow="autoplay"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        // Բացել modal տեսանյութի վրա սեղմելիս
+        $('.video-card, .video-card-short').on('click', function() {
+            var videoSrc = $(this).data('video');
+            var title = $(this).data('title') || 'Տեսանյութ';
+
+            $('#videoModalLabel').text(title);
+            $('#videoFrame').attr('src', videoSrc + "?autoplay=1&rel=0");
+
+            $('#videoModal').modal('show');
+        });
+
+        // Modal փակելիս iframe src հանել, որ տեսանյութը կանգնի
+        $('#videoModal').on('hidden.bs.modal', function () {
+            $('#videoFrame').attr('src', '');
+        });
+    });
+    </script>
 
 </body>
 

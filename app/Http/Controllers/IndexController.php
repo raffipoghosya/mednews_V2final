@@ -108,7 +108,7 @@ class IndexController extends Controller
             ->where('published', 1)
             ->where('id', '!=', $lastPost->id)
             ->orderBy('date', 'desc')
-            ->take(12)
+            ->take(9)
             ->get();
 
         $advertisements = Reclam::query()
@@ -133,79 +133,106 @@ class IndexController extends Controller
             'videos' => $videos,
         ]);
     }
-
-
     public function news()
     {
         $now = Carbon::now()->format('Y-m-d');
-
-        // Controller-ում LatestNews-ի կոդը պետք է լինի այսպես՝
-$latestNews = Post::where('published', 1)
-->where('selected', 0)
-->orderBy('date', 'desc')
-->paginate(6);  //paginate է պետք, ոչ get()
-
+    
+        // Վերջին նորությունները (որոնք ընտրովի չեն և հրապարակված են)
+        $latestNews = Post::where('published', 1)
+            ->where('selected', 0)
+            ->orderBy('date', 'desc')
+            ->paginate(6);
+    
+        // Ամենաշատ դիտված 3 նորությունները
         $mostRead = Post::where('published', 1)
             ->orderBy('votes', 'desc')
             ->take(3)
             ->get();
-
-        $category = Category::where('top', '0')->where('visible', '1')->orderby('orders', 'asc')->get();
-        // Controller - սահմանում ենք միայն 5 վիդեո
-        $video = Video::orderby('id', 'desc')->take(5)->get();  // take(5) նշանակում է վերցնել միայն 5 վիդեո
-
+    
+        // Բոլոր կատեգորիաները (առանց order/ordering սյան՝ եթե չկա)
+        $category = Category::all();
+    
+        // Վերջին 5 տեսանյութերը
+        $video = Video::orderBy('id', 'desc')->take(5)->get();
+    
+        // Բոլոր կատեգորիաների նորությունները (որոնք համապատասխան տվյալ կատեգորիայի են)
         $catnews = [];
+    
         foreach ($category as $cat) {
-            $catnews[] = Post::where(function ($query) use ($now) {
-                $query->whereDate('date', '<=', $now)->orWhereNull('date');
-            })->where('published', '1')->where('top', '0')->where('category_id', $cat->id)->orderby('id', 'desc')->take(3)->get();
+            $catnews[] = $cat->posts()
+                ->where(function ($query) use ($now) {
+                    $query->whereDate('date', '<=', $now)
+                          ->orWhereNull('date');
+                })
+                ->where('published', 1)
+                ->orderBy('id', 'desc')
+                ->take(3)
+                ->get();
         }
-
-        // $video = Video::orderby('id', 'desc')->take(6)->get();
-        $banner = Banner::orderby('id', 'desc')->first();
-        $reclambanners = Reclam::where('type', 'banner')->where('page', 'index')->orderBy('id', 'desc')->get();
-        $cats = Category::orderby('ordering', 'asc')->get();
-
+    
+        // Վերջին banner-ը
+        $banner = Banner::orderBy('id', 'desc')->first();
+    
+        // Index էջի գովազդային banner-ները
+        $reclambanners = Reclam::where('type', 'banner')
+            ->where('page', 'index')
+            ->orderBy('id', 'desc')
+            ->get();
+    
+        // Բոլոր կատեգորիաները (եթե ordering սյունը չես օգտագործում, ապա սա suffice է)
+        $cats = Category::all();
+    
         return view('news', compact(
-            'latestNews', 'mostRead', 'category', 'catnews', 'video', 'banner', 'reclambanners', 'cats'
+            'latestNews',
+            'mostRead',
+            'category',
+            'catnews',
+            'video',
+            'banner',
+            'reclambanners',
+            'cats'
         ));
     }
-
-
+    
+    
     public function interview()
-{
-    $now = Carbon::now()->format('Y-m-d');
-
-    // Փոխել՝ միայն հարցազրույցները
-    $interviews = Post::where('category_id', 2) // 2 նշանակում է հարցազրույցների category_id
-        ->where('published', 1)
-        ->where('selected', 0)
-        ->orderBy('date', 'desc')
-        ->paginate(6);  // paginate-ը պետք է
-
-    $mostRead = Post::where('published', 1)
-        ->orderBy('votes', 'desc')
-        ->take(3)
-        ->get();
-
-    $category = Category::where('top', '0')->where('visible', '1')->orderby('orders', 'asc')->get();
-    $video = Video::orderby('id', 'desc')->take(5)->get();
-
-    $banner = Banner::orderby('id', 'desc')->first();
-    $reclambanners = Reclam::where('type', 'banner')->where('page', 'index')->orderBy('id', 'desc')->get();
-    $cats = Category::orderby('ordering', 'asc')->get();
-
-    // Custom pagination
-    return view('interview', compact(
-        'interviews',
-        'mostRead',
-        'category',
-        'video',
-        'banner',
-        'reclambanners',
-        'cats'
-    ));
-}
+    {
+        $now = Carbon::now()->format('Y-m-d');
+    
+        $interviews = Post::where('published', 1)
+            ->where('selected', 0)
+            ->whereHas('categories', function ($query) {
+                $query->where('title', 'Հարցազրույց');
+            })
+            ->orderBy('date', 'desc')
+            ->paginate(6);
+    
+        $mostRead = Post::where('published', 1)
+            ->orderBy('votes', 'desc')
+            ->take(3)
+            ->get();
+    
+        $category = Category::all();
+        $video = Video::orderBy('id', 'desc')->take(5)->get();
+        $banner = Banner::orderBy('id', 'desc')->first();
+        $reclambanners = Reclam::where('type', 'banner')
+            ->where('page', 'index')
+            ->orderBy('id', 'desc')
+            ->get();
+        $cats = Category::orderBy('id', 'asc')->get();
+    
+        return view('interview', compact(
+            'interviews',
+            'mostRead',
+            'category',
+            'video',
+            'banner',
+            'reclambanners',
+            'cats'
+        ));
+    }
+    
+    
 
     public function videos()
     {

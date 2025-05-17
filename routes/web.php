@@ -69,6 +69,7 @@ Route::post('/search', [SearchController::class, 'index']);
 Route::post('/datesearch', [SearchController::class, 'datesearch']);
 Route::post('/adsearch', [SearchController::class, 'adsearch']);
 
+
 Route::get('/admin', [AdminController::class, 'index']);
 
 Route::get('/adminsections', [AdminController::class, 'sections']);

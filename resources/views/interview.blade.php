@@ -49,9 +49,17 @@
             <div class="slider-wrapper">
                 <div class="slider-track">
                     @foreach($video as $vid)
-                        <div class="video-card">
-                            <div class="video-thumb">
-                                <img src="{{ asset('images/videos/' . $vid->img) }}" alt="Video" />
+                        @php
+                            // iframe-ի src-ը դուրս բերենք նույն կերպ՝ regex-ով, եթե ունես iframe դաշտ կամ վիդեոյի հղում
+                            // Եթե $vid->iframe չկա, կարող ես ուղղակի հղում պահել $vid->video_url դաշտում
+                            preg_match('/src="([^"]+)"/', $vid->iframe ?? '', $matches);
+                            $videoSrc = $matches[1] ?? ($vid->video_url ?? '');
+                        @endphp
+
+                        <div class="video-card" data-video="{{ $videoSrc }}">
+                            <div class="video-thumb" style="cursor: pointer;">
+                                <img src="{{ asset('images/videos/' . ($vid->img ?? 'default.jpg')) }}"
+                                    alt="{{ $vid->title }}" />
                                 <div class="play-button">&#9658;</div>
                             </div>
                             <p>{{ $vid->title }} / {{ $vid->author }}</p>
@@ -60,7 +68,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="ad-items">
             @foreach($reclambanners as $banner)
                 <div class="ad-item">
@@ -73,6 +81,48 @@
     </div>
 
     @include('components.footer')
+
+
+    <!-- Video modal -->
+    <div id="videoModal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:9999;">
+        <div style="position:relative; width:80%; max-width:900px;">
+            <button id="closeModal"
+                style="position:absolute; top:-30px; right:0; font-size:30px; color:white; background:none; border:none; cursor:pointer;">&times;</button>
+            <iframe id="videoFrame" width="100%" height="450" frameborder="0" allowfullscreen allow="autoplay"></iframe>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('videoFrame');
+            const closeModalBtn = document.getElementById('closeModal');
+
+            document.querySelectorAll('.video-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const videoUrl = card.getAttribute('data-video');
+                    if (!videoUrl) {
+                        alert('Չհաջողվեց գտնել վիդեոյի հղումը։');
+                        return;
+                    }
+                    iframe.src = videoUrl + '?autoplay=1&rel=0';
+                    modal.style.display = 'flex';
+                });
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                iframe.src = '';  // դադարեցնել նվագարկումը
+                modal.style.display = 'none';
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    iframe.src = '';
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>

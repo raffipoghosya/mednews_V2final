@@ -46,10 +46,12 @@
                                 <img src="{{ asset('images/posts/' . ($item->img ?? 'default.jpg')) }}"
                                     alt="{{ $item->title }}"
                                     onerror="this.onerror=null;this.src='{{ asset('images/posts/default.jpg') }}';">
-                                <p id="main-text" class="banner-text">
-                                    {!! Str::limit(strip_tags(optional($lastPost)->description), 97) !!}
-                                    <a href="{{ route('news.show', optional($lastPost)->id) }}">Կարդալ ավելին</a>
-                                </p>
+                                <a style="text-decoration: none;" href="{{ route('news.show', optional($lastPost)->id) }}">
+                                    <p id="main-text" class="banner-text">
+                                        {!! Str::limit(strip_tags(optional($lastPost)->description), 97) !!}
+
+                                    </p>
+                                </a>
                             </div>
                         @endforeach
                     </div>
@@ -63,8 +65,8 @@
         <div class="ad-banner">
             @foreach($advertisements as $key => $item)
                 <a href="{{ $item->href }}" target="_blank">
-                    <img src="{{ asset('images/reclam/' . $item->img) }}"
-                        class="ad-image {{ $key === 0 ? 'active' : '' }}" alt="Ad {{ $key + 1 }}">
+                    <img src="{{ asset('images/reclam/' . $item->img) }}" class="ad-image {{ $key === 0 ? 'active' : '' }}"
+                        alt="Ad {{ $key + 1 }}">
                 </a>
             @endforeach
         </div>
@@ -77,7 +79,7 @@
             <div class="news-column">
                 <h1 class="news-heading"><a href="#">ԼՐԱՏՎՈՒԹՅՈՒՆ</a></h1>
                 <div class="news-group-card">
-                    @foreach($lastPosts as $item)
+                    @foreach($lastPosts->take(3) as $item)
                         <div class="news-card">
                             <a href="{{ route('news.show', $item->id) }}">
                                 <img src="{{ asset('images/posts/' . ($item->img ?? 'default.jpg')) }}"
@@ -85,9 +87,10 @@
                                     onerror='this.onerror=null;this.src="{{ asset("images/posts/default.jpg") }}";'>
                             </a>
                             <div class="news-content">
-                                <h3><a href="{{ route('news.show', $item->id) }}">{{ $item->title }}</a></h3>
+                                <h3><a style="text-decoration: none;"
+                                        href="{{ route('news.show', $item->id) }}">{{ $item->title }}</h3>
                                 <p>{{ Str::limit(strip_tags($item->description), 100) }}</p>
-                                <span class="news-date">{{ \Carbon\Carbon::parse($item->date)->format('d.m.y') }}</span>
+                                <span class="news-date">{{ \Carbon\Carbon::parse($item->date)->format('d.m.y') }}</a></span>
                             </div>
                         </div>
                     @endforeach
@@ -106,9 +109,10 @@
                                     onerror='this.onerror=null;this.src="{{ asset("images/posts/default.jpg") }}";'>
                             </a>
                             <div class="news-content">
-                                <h3><a href="{{ route('news.show', $item->id) }}">{{ $item->title }}</a></h3>
+                                <h3><a style="text-decoration: none;"
+                                        href="{{ route('news.show', $item->id) }}">{{ $item->title }}</h3>
                                 <p>{{ Str::limit(strip_tags($item->description), 100) }}</p>
-                                <span class="news-date">{{ \Carbon\Carbon::parse($item->date)->format('d.m.y') }}</span>
+                                <span class="news-date">{{ \Carbon\Carbon::parse($item->date)->format('d.m.y') }}</a></span>
                             </div>
                         </div>
                     @endforeach
@@ -117,7 +121,6 @@
         </div>
     </section>
 
-    <!-- Videos Section -->
     <section class="video-slider-section">
         <h2 class="section-title">ՏԵՍԱՆՅՈՒԹԵՐ</h2>
         <button class="slider-btn prev" id="prevBtn" disabled>
@@ -126,7 +129,12 @@
         <div class="slider-wrapper">
             <div class="slider-track">
                 @foreach($videos as $video)
-                    <div class="video-card" data-video="{{ $video->link }}">
+                    @php
+                        // iframe src-ի արժեքը կստանանք regex-ով՝ $video->iframe դաշտից
+                        preg_match('/src="([^"]+)"/', $video->iframe, $matches);
+                        $videoSrc = $matches[1] ?? '';
+                    @endphp
+                    <div class="video-card" data-video="{{ $videoSrc }}">
                         <div class="video-thumb" style="cursor: pointer;">
                             <img src="{{ asset('images/videos/' . ($video->img ?? 'default.jpg')) }}"
                                 alt="{{ $video->title }}">
@@ -135,7 +143,6 @@
                         <p>{{ $video->title }}</p>
                     </div>
                 @endforeach
-
             </div>
         </div>
         <button class="slider-btn next" id="nextBtn">
@@ -145,58 +152,50 @@
 
     @include('components.footer')
 
-
-
-       <!-- Video Modal -->
-       <!-- <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content" style="background: #000;">
-                <div class="modal-body" style="position: relative; padding: 0;">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        style="position: absolute; top: 10px; right: 15px; color: white; z-index: 9999;">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <div class="video-container"
-                        style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe id="videoFrame" width="100%" height="100%" frameborder="0" allowfullscreen
-                            style="position: absolute; top: 0; left: 0;"></iframe>
-                    </div>
-                </div>
-            </div>
+    <!-- Video modal -->
+    <div id="videoModal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:9999;">
+        <div style="position:relative; width:80%; max-width:900px;">
+            <button id="closeModal"
+                style="position:absolute; top:-30px; right:0; font-size:30px; color:white; background:none; border:none; cursor:pointer;">&times;</button>
+            <iframe id="videoFrame" width="100%" height="450" frameborder="0" allowfullscreen allow="autoplay"></iframe>
         </div>
-    </div> -->
+    </div>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const videoCards = document.querySelectorAll('.video-card');
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('videoFrame');
+            const closeModalBtn = document.getElementById('closeModal');
 
-            videoCards.forEach(card => {
+            document.querySelectorAll('.video-card').forEach(card => {
                 card.addEventListener('click', () => {
-                    const videoSrc = card.getAttribute('data-video');
-                    if (!videoSrc) return alert("Տեսանյութի հղումը բացակայում է։");
-
-                    let embedLink = '';
-
-                    if (videoSrc.includes("youtube.com/watch?v=")) {
-                        embedLink = videoSrc.replace("watch?v=", "embed/");
-                    } else if (videoSrc.includes("youtu.be/")) {
-                        const id = videoSrc.split("youtu.be/")[1];
-                        embedLink = "https://www.youtube.com/embed/" + id;
-                    } else if (videoSrc.includes("youtube.com/embed/")) {
-                        embedLink = videoSrc;
-                    } else {
-                        return alert("Տեսանյութի հղումը սխալ է։");
+                    const videoUrl = card.getAttribute('data-video');
+                    if (!videoUrl) {
+                        alert('Չհաջողվեց գտնել վիդեոյի հղումը։');
+                        return;
                     }
-
-                    document.getElementById('videoFrame').src = embedLink + '?autoplay=1';
-                    $('#videoModal').modal('show');
+                    // Ավելացնում ենք autoplay
+                    iframe.src = videoUrl + '?autoplay=1&rel=0';
+                    modal.style.display = 'flex';
                 });
             });
 
-            $('#videoModal').on('hidden.bs.modal', function () {
-                document.getElementById('videoFrame').src = '';
+            closeModalBtn.addEventListener('click', () => {
+                iframe.src = ''; // դադարեցնել վիդեո նվագարկումը
+                modal.style.display = 'none';
+            });
+
+            // Կափարիչի կտտոցը նաև modal-ի ետին հատվածի վրա, փակելու համար
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    iframe.src = '';
+                    modal.style.display = 'none';
+                }
             });
         });
     </script>
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
