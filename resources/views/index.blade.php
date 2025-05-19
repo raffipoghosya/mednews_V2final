@@ -122,11 +122,12 @@
     </section>
 
     <section class="video-slider-section">
-        <h2 class="section-title">ՏԵՍԱՆՅՈՒԹԵՐ</h2>
+
         <button class="slider-btn prev" id="prevBtn" disabled>
             <img src="{{ asset('style/left.svg') }}" alt="Left Arrow">
         </button>
         <div class="slider-wrapper">
+            <h2 class="section-title">ՏԵՍԱՆՅՈՒԹԵՐ</h2>
             <div class="slider-track">
                 @foreach($videos as $video)
                     @php

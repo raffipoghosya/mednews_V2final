@@ -72,7 +72,6 @@
                 <td>{{$post->id}}</td>
                 <td><img src="images/posts/{{$post->img}}" width="100" alt=""/></td>
                 <td>{{$post->title}}</td>
-                <td>{{$post->category->name}}</td>
                 <td>{{$post->created_at}}</td>
                 <td>{{$post->votes}}</td>
                 <td>
