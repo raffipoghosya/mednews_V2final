@@ -26,6 +26,7 @@
     gap: 20px;  /* Գոյություն ունեն հիմնական դադարներ */
     transition: transform 0.4s ease-in-out;
     justify-content: flex-start;  /* Փորձիր ավելացնել այս */
+    margin-bottom: 10px;
 }
 
 
@@ -89,11 +90,11 @@
 }
 
 .slider-btn.prev {
-    left: -10px;
+    left: 10px;
 }
 
 .slider-btn.next {
-    right: -10px;
+    right: 10px;
 }
 
 /* Disabled button */
