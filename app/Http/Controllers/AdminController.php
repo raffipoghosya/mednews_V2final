@@ -65,6 +65,10 @@ class AdminController extends Controller
         $cat->save();
         return redirect('/adminsections');
     }
+
+
+
+    
     /*==POSTS==*/
     public function adminallposts()
     {
