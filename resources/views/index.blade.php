@@ -31,7 +31,7 @@
 
                     <h2 id="main-title" class="banner-title">{{ optional($lastPost)->title }}</h2>
                     <p id="main-text" class="banner-text">
-                        {!! Str::limit(strip_tags(optional($lastPost)->description), 460) !!}
+                        {!! Str::limit(strip_tags(optional($lastPost)->description), 120) !!}
                         <a href="{{ route('news.show', optional($lastPost)->id) }}">Կարդալ ավելին</a>
                     </p>
                 </div>
@@ -41,19 +41,19 @@
                     <div class="doctors-grid">
                         @foreach($lastPosts as $item)
                             <div class="doctor-card" data-id="{{ $item->id }}" data-title="{{ $item->title }}"
-                                data-text="{{ strip_tags(Str::limit($item->description, 100)) }}"
+                                data-text="{{ strip_tags(Str::limit($item->description, 300)) }}"
                                 data-url="{{ route('news.show', $item->id) }}">
+
                                 <img src="{{ asset('images/posts/' . ($item->img ?? 'default.jpg')) }}"
                                     alt="{{ $item->title }}"
                                     onerror="this.onerror=null;this.src='{{ asset('images/posts/default.jpg') }}';">
-                                <a style="text-decoration: none;" href="{{ route('news.show', optional($lastPost)->id) }}">
-                                    <p id="main-text" class="banner-text">
-                                        {!! Str::limit(strip_tags(optional($lastPost)->description), 97) !!}
 
-                                    </p>
+                                <a href="{{ route('news.show', $item->id) }}" style="text-decoration: none;">
+                                    <p>{!! Str::limit(strip_tags($item->description), 30) !!}</p>
                                 </a>
                             </div>
                         @endforeach
+
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
     </main>
 
     <!-- Reclambanner -->
-    <section class="ad-section">
+    <!-- <section class="ad-section"> -->
         <div class="ad-banner">
             @foreach($advertisements as $key => $item)
                 <a href="{{ $item->href }}" target="_blank">
@@ -70,10 +70,10 @@
                 </a>
             @endforeach
         </div>
-    </section>
+    <!-- </section> -->
 
     <!-- News Section -->
-    <section class="news-section">
+    <!-- <section class="news-section"> -->
         <div class="news-container">
             <!-- Left Column -->
             <div class="news-column">
@@ -119,7 +119,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    <!-- </section> -->
 
     <section class="video-slider-section">
 

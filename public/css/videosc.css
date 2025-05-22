@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Armenian:wght@400;600&display=swap');
+
 /* Video Slider Section */
 .video-slider-section {
     /* padding: 60px 40px; */
@@ -6,18 +8,19 @@
 }
 
 .section-title {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: bold;
     color: #833F6D;
     margin-bottom: 30px;
+    font-family: 'Montserrat Armenian', sans-serif;
+    
 }
 
 /* Wrapper with padding for visual balance */
 .slider-wrapper {
     position: relative;
     overflow: hidden;
-    padding-left: 3.5%;
-    padding-right: 7%; 
+    padding: 1% 2% 1%;
 }
 
 /* Track scrolls horizontally */

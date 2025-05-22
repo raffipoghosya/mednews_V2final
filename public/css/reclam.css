@@ -5,12 +5,13 @@
     justify-content: center;
     margin-top: 1px;
     padding: 10px 20px 20px;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
+    border-radius: 12px;
 }
 
 .ad-banner {
     width: 100%;
-    max-width: 1393px;
+    max-width: 100%;
     height: 371px;
     position: relative;
     border-radius: 8px;
@@ -21,7 +22,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 97%;
     height: 371px;
     object-fit: cover;
     opacity: 0;
@@ -31,6 +32,8 @@
 
 .ad-banner img.active {
     opacity: 1;
+    margin-left: 2%;
+    border-radius: 25px;
     z-index: 1;
     position: relative;
 }

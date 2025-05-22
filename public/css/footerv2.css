@@ -11,7 +11,7 @@
 footer {
     background-color: #833F6D;
     color: white;
-    padding: 20px 0;
+    padding: 1% 0;
     width: 100%;
     border-top: 2px solid white;
     box-sizing: border-box;
@@ -26,7 +26,7 @@ footer {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     /* padding: -1px 12px; */
 }
@@ -43,6 +43,8 @@ footer {
     align-items: center;
     padding: 0;
     margin: 0;
+    margin-left: 13%;
+    margin-right: 0%;
 }
 
 .footer-links li {
@@ -74,16 +76,18 @@ footer {
 
 /* Contact info and logos */
 .footer-right {
+    margin-left: 15%;
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 15%;
     flex: 1.5;
-    justify-content: flex-end;
     position: relative;
+    justify-content: flex-start;
+
 }
 
 .contact-info {
-    padding: 0 50px;
+    padding: 0 15%;
     border-left: 2px solid white;
     border-right: 2px solid white;
 }
@@ -111,7 +115,7 @@ footer {
 /* @Yweb position */
 .yweb-text {
     position: absolute;
-    right: -120px;
+    right: 5%;
     bottom: 0;
     font-size: 14px;
     padding-right: 10px;
