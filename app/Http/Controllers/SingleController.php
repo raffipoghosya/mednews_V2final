@@ -27,6 +27,7 @@ class SingleController extends Controller
         $gallery = $post->gallery;
         $gal = explode(",",$gallery);
         $test = "test";
+        
         return view('single')
             ->with('test',$test)
             ->with('post',$post)

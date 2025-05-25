@@ -11,6 +11,24 @@
     <title>Document</title>
 </head>
 
+ <!-- Video Modal -->
+    <div id="videoModal" class="custom-modal">
+        <div class="custom-modal-content">
+            <button class="custom-modal-close" id="closeModalBtn">
+                <img src="{{ asset('style/closeIcon.svg') }}" alt="closeIcon" />
+            </button>
+
+            <div class="custom-modal-body">
+                <div class="video-wrapper">
+                    <iframe id="videoFrame" src="" allowfullscreen allow="autoplay"></iframe>
+                </div>
+            </div>
+            <p class="custom-modal-title" id="videoModalLabel">Տեսանյութ</p>
+
+            <img src="{{ asset('style/videoModalLogo.svg') }}" class="videoLogo" alt="Decoration" />
+        </div>
+    </div>
+    
 <body style="display: flex; flex-direction: column; min-height: 100vh;">
     @include('components.header')
 
@@ -31,7 +49,7 @@
 
                     <h2 id="main-title" class="banner-title">{{ optional($lastPost)->title }}</h2>
                     <p id="main-text" class="banner-text">
-                        {!! Str::limit(strip_tags(optional($lastPost)->description), 120) !!}
+                        {!! Str::limit(strip_tags(optional($lastPost)->description), 600) !!}
                         <a href="{{ route('news.show', optional($lastPost)->id) }}">Կարդալ ավելին</a>
                     </p>
                 </div>
@@ -61,70 +79,66 @@
     </main>
 
     <!-- Reclambanner -->
-    <!-- <section class="ad-section"> -->
-        <div class="ad-banner">
-            @foreach($advertisements as $key => $item)
-                <a href="{{ $item->href }}" target="_blank">
-                    <img src="{{ asset('images/reclam/' . $item->img) }}" class="ad-image {{ $key === 0 ? 'active' : '' }}"
-                        alt="Ad {{ $key + 1 }}">
-                </a>
-            @endforeach
-        </div>
-    <!-- </section> -->
+    <div class="ad-banner">
+        @foreach($advertisements as $key => $item)
+            <a href="{{ $item->href }}" target="_blank">
+                <img src="{{ asset('images/reclam/' . $item->img) }}" class="ad-image {{ $key === 0 ? 'active' : '' }}"
+                    alt="Ad {{ $key + 1 }}">
+            </a>
+        @endforeach
+    </div>
 
     <!-- News Section -->
     <!-- <section class="news-section"> -->
-        <div class="news-container">
-            <!-- Left Column -->
-            <div class="news-column">
-                <h1 class="news-heading"><a href="#">ԼՐԱՏՎՈՒԹՅՈՒՆ</a></h1>
-                <div class="news-group-card">
-                    @foreach($lastPosts->take(3) as $item)
-                        <div class="news-card">
-                            <a href="{{ route('news.show', $item->id) }}">
-                                <img src="{{ asset('images/posts/' . ($item->img ?? 'default.jpg')) }}"
-                                    alt="{{ $item->title }}"
-                                    onerror='this.onerror=null;this.src="{{ asset("images/posts/default.jpg") }}";'>
-                            </a>
-                            <div class="news-content">
-                                <h3><a style="text-decoration: none;"
-                                        href="{{ route('news.show', $item->id) }}">{{ $item->title }}</h3>
-                                <p>{{ Str::limit(strip_tags($item->description), 100) }}</p>
-                                <span class="news-date">{{ \Carbon\Carbon::parse($item->date)->format('d.m.y') }}</a></span>
-                            </div>
+    <div class="news-container">
+        <!-- Left Column -->
+        <div class="news-column">
+            <h1 class="news-heading"><a href="#">ԼՐԱՀՈՍ</a></h1>
+            <div class="news-group-card">
+                @foreach($lastPosts->take(3) as $item)
+                    <div class="news-card">
+                        <a href="{{ route('news.show', $item->id) }}">
+                            <img src="{{ asset('images/posts/' . ($item->img ?? 'default.jpg')) }}" alt="{{ $item->title }}"
+                                onerror='this.onerror=null;this.src="{{ asset("images/posts/default.jpg") }}";'>
+                        </a>
+                        <div class="news-content">
+                            <h3><a style="text-decoration: none;"
+                                    href="{{ route('news.show', $item->id) }}">{{ $item->title }}</h3>
+                            <p>{{ Str::limit(strip_tags($item->description), 250) }}</p>
+                            <span class="news-date">{{ \Carbon\Carbon::parse($item->date)->format('d.m.y') }}</a></span>
                         </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <!-- Right Column -->
-            <div class="news-column">
-                <h1 class="news-heading"><a href="#">ԱՌԱՎԵԼ ԸՆԹԵՐՑՎԱԾ</a></h1>
-                <div class="news-group-card">
-                    @foreach($mostViewed as $item)
-                        <div class="news-card">
-                            <a href="{{ route('news.show', $item->id) }}">
-                                <img src="{{ asset('images/posts/' . ($item->img ?? 'default.jpg')) }}"
-                                    alt="{{ $item->title }}"
-                                    onerror='this.onerror=null;this.src="{{ asset("images/posts/default.jpg") }}";'>
-                            </a>
-                            <div class="news-content">
-                                <h3><a style="text-decoration: none;"
-                                        href="{{ route('news.show', $item->id) }}">{{ $item->title }}</h3>
-                                <p>{{ Str::limit(strip_tags($item->description), 100) }}</p>
-                                <span class="news-date">{{ \Carbon\Carbon::parse($item->date)->format('d.m.y') }}</a></span>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
             </div>
         </div>
+        <div class="divider"></div>
+        <!-- Right Column -->
+        <div class="news-column">
+            <h1 class="news-heading"><a href="#">ԱՌԱՎԵԼ ԸՆԹԵՐՑՎԱԾ</a></h1>
+            <div class="news-group-card">
+                @foreach($mostViewed as $item)
+                    <div class="news-card">
+                        <a href="{{ route('news.show', $item->id) }}">
+                            <img src="{{ asset('images/posts/' . ($item->img ?? 'default.jpg')) }}" alt="{{ $item->title }}"
+                                onerror='this.onerror=null;this.src="{{ asset("images/posts/default.jpg") }}";'>
+                        </a>
+                        <div class="news-content">
+                            <h3><a style="text-decoration: none;"
+                                    href="{{ route('news.show', $item->id) }}">{{ $item->title }}</h3>
+                            <p>{{ Str::limit(strip_tags($item->description), 250) }}</p>
+                            <span class="news-date">{{ \Carbon\Carbon::parse($item->date)->format('d.m.y') }}</a></span>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
     <!-- </section> -->
 
     <section class="video-slider-section">
 
         <button class="slider-btn prev" id="prevBtn" disabled>
-            <img src="{{ asset('style/left.svg') }}" alt="Left Arrow">
+            <img src="{{ asset('style/left.svg') }}" alt="Left Arrow" class="arrow">
         </button>
         <div class="slider-wrapper">
             <h2 class="section-title">ՏԵՍԱՆՅՈՒԹԵՐ</h2>
@@ -135,63 +149,50 @@
                         preg_match('/src="([^"]+)"/', $video->iframe, $matches);
                         $videoSrc = $matches[1] ?? '';
                     @endphp
-                    <div class="video-card" data-video="{{ $videoSrc }}">
+                <div class="video-card" data-video="{{ $videoSrc }}" data-title="{{ $video->title }}">
                         <div class="video-thumb" style="cursor: pointer;">
                             <img src="{{ asset('images/videos/' . ($video->img ?? 'default.jpg')) }}"
                                 alt="{{ $video->title }}">
-                            <div class="play-button">&#9658;</div>
+                            <img src="{{ asset('style/play_button.svg') }}" alt="Play Button" class="play-button">
                         </div>
-                        <p>{{ $video->title }}</p>
+                     <p class="videoTitle">{{ $video->title }}</p>
                     </div>
                 @endforeach
             </div>
         </div>
         <button class="slider-btn next" id="nextBtn">
-            <img src="{{ asset('style/right.svg') }}" alt="Right Arrow">
+            <img src="{{ asset('style/right.svg') }}" alt="Right Arrow" class="arrow">
         </button>
     </section>
 
     @include('components.footer')
 
-    <!-- Video modal -->
-    <div id="videoModal"
-        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:9999;">
-        <div style="position:relative; width:80%; max-width:900px;">
-            <button id="closeModal"
-                style="position:absolute; top:-30px; right:0; font-size:30px; color:white; background:none; border:none; cursor:pointer;">&times;</button>
-            <iframe id="videoFrame" width="100%" height="450" frameborder="0" allowfullscreen allow="autoplay"></iframe>
-        </div>
-    </div>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = document.getElementById('videoModal');
-            const iframe = document.getElementById('videoFrame');
-            const closeModalBtn = document.getElementById('closeModal');
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("videoModal");
+            const videoFrame = document.getElementById("videoFrame");
+            const closeModalBtn = document.getElementById("closeModalBtn");
 
-            document.querySelectorAll('.video-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const videoUrl = card.getAttribute('data-video');
-                    if (!videoUrl) {
-                        alert('Չհաջողվեց գտնել վիդեոյի հղումը։');
-                        return;
-                    }
-                    // Ավելացնում ենք autoplay
-                    iframe.src = videoUrl + '?autoplay=1&rel=0';
-                    modal.style.display = 'flex';
+            document.querySelectorAll(".video-card, .video-card-short").forEach((card) => {
+                card.addEventListener("click", () => {
+                    const videoSrc = card.getAttribute("data-video");
+                const title = card.querySelector(".videoTitle")?.textContent;
+                    document.getElementById("videoModalLabel").innerText = title;
+                    videoFrame.src = videoSrc + "?autoplay=1&rel=0";
+                    modal.style.display = "flex";
                 });
             });
 
-            closeModalBtn.addEventListener('click', () => {
-                iframe.src = ''; // դադարեցնել վիդեո նվագարկումը
-                modal.style.display = 'none';
+            closeModalBtn.addEventListener("click", () => {
+                modal.style.display = "none";
+                videoFrame.src = "";
             });
 
-            // Կափարիչի կտտոցը նաև modal-ի ետին հատվածի վրա, փակելու համար
-            modal.addEventListener('click', (e) => {
+            // Close modal when clicking outside the content
+            modal.addEventListener("click", (e) => {
                 if (e.target === modal) {
-                    iframe.src = '';
-                    modal.style.display = 'none';
+                    modal.style.display = "none";
+                    videoFrame.src = "";
                 }
             });
         });

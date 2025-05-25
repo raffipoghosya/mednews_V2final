@@ -1,65 +1,179 @@
-.news-img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 20px;
+@font-face {
+    font-family: 'Montserrat Armenian';
+    src: url('../fonts/web_font/Montserratarm-Regular.woff2') format('woff2'),
+        url('../fonts/web_font/Montserrat-Armenian-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
+
+@font-face {
+    font-family: 'Montserrat Armenian bold';
+    src: url('../fonts/web_font/Montserratarm-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Armenian semiBold';
+    src: url('../fonts/web_font/Montserratarm-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Armenian light';
+    src: url('../fonts/web_font/Montserratarm-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat Armenian';
     margin: 0;
     padding: 0;
-    background-color: #fafafa;
+    background-color: #FFFFFF;
 }
 
 .news-section {
-    padding: 60px 40px;
+    margin: 2% 4%;
 }
 
 .news-container {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    gap: 50px;
 }
 
 .news-column {
-    width: 70%;
-    background-color: #fff;
-    padding: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 80%;
+}
+
+.information {
+    background-color: #F9F9F9;
+    padding: 23px 20px;
     border-radius: 10px;
+    position: relative;
 }
 
 .news-image-and-title {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: start;
 }
 
 .news-img {
     width: 45%;
     height: auto;
-    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
 .news-heading h1 {
     font-size: 24px;
-    color: #833F6D;
-    text-align: right;
-    margin-left: 20px;
+    color: #1E1E1E;
+    margin-left: 22px;
+    font-family: 'Montserrat Armenian semiBold';
+    margin-top: 24px;
+}
+
+
+.news-content {
+    font-size: 14px;
+    line-height: 147%;
+    color: #6C6C6C;
+    font-family: 'Montserrat Armenian';
+}
+
+.news-content ul {
+    font-size: 14px;
+    line-height: 147%;
+    color: #6C6C6C;
+    font-family: 'Montserrat Armenian light';
+    list-style-type: disc;
+    padding-inline-start: 40px;
 }
 
 .news-content {
+    padding: 0px 20px;
+}
+
+.media-gallery-wrapper {
+    position: relative;
     margin-top: 20px;
 }
 
-.news-content p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #444;
+.media-gallery {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 20px;
+    padding-bottom: 10px;
+    margin: 0;
 }
 
+.media-item {
+    flex: 0 0 auto;
+    width: 23.8%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.media-item img,
+.media-item video {
+    height: 200px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 1.92px 1.92px 1.92px rgba(0, 0, 0, 0.05);
+
+}
+
+.media-scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.media-scroll-arrow img {
+    width: 15;
+    height: 15px;
+}
+
+.media-scroll-arrow.left {
+    left: -40px;
+    display: none;
+}
+
+.media-scroll-arrow.right {
+    right: -40px;
+}
+
+.media-scroll-arrow.left.visible {
+    display: flex;
+}
+
+.media-gallery::-webkit-scrollbar {
+    display: none;
+}
+
+.postDate {
+    margin-right: 30px;
+    font-size: 11px;
+    color: #AFAFAF;
+    font-family: 'Montserrat Armenian light';
+    position: absolute;
+    bottom: 20;
+    right: 0;
+}
+
+
 .ads-column {
-    width: 30%;
+    width: 20%;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -69,7 +183,9 @@ body {
     width: 100%;
     border-radius: 10px;
 }
-/* ≤ 1000px */
+
+/* Responsive Breakpoints */
+
 @media (max-width: 1000px) {
     .news-container {
         flex-direction: column;
@@ -87,16 +203,14 @@ body {
 
     .news-img {
         width: 100%;
-        margin-bottom: 20px;
     }
 
     .news-heading h1 {
-        text-align: left;
         margin-left: 0;
+        text-align: left;
     }
 }
 
-/* ≤ 800px */
 @media (max-width: 800px) {
     .news-section {
         padding: 40px 20px;
@@ -115,7 +229,6 @@ body {
     }
 }
 
-/* ≤ 700px */
 @media (max-width: 700px) {
     .news-heading h1 {
         font-size: 20px;
@@ -126,7 +239,6 @@ body {
     }
 }
 
-/* ≤ 600px */
 @media (max-width: 600px) {
     .news-section {
         padding: 30px 15px;
@@ -145,7 +257,6 @@ body {
     }
 }
 
-/* ≤ 500px */
 @media (max-width: 500px) {
     .news-heading h1 {
         font-size: 18px;
@@ -156,7 +267,6 @@ body {
     }
 }
 
-/* ≤ 400px */
 @media (max-width: 400px) {
     .news-heading h1 {
         font-size: 16px;

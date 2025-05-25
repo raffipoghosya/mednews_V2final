@@ -1,107 +1,107 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Armenian:wght@400;600&display=swap');
 /* Header Wrapper */
+
 .custom-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #F7F6F9;
-    padding: 0 40px;
+    padding: 0% 4%;
     height: 92px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12);
     flex-wrap: wrap;
 }
 
 /* Logo */
 .logo-area {
-    flex: 1;
+    flex: 2;
 }
+
 .logo-img {
-    height: 60px;
+    height: 62px;
     max-width: 100%;
 }
 
 /* Menu */
 .menu-area {
-    flex: 2;
+    flex: 3;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
 }
+
 .menu-nav {
     display: flex;
-    gap: 60px;
+    gap: 50px;
     list-style: none;
     align-items: center;
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
 }
+
 .menu-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8.5px;
     text-decoration: none;
-    color: #111;
-    font-weight: bold;
-    text-transform: uppercase;
+    color: #151515;
+    font-family: 'Montserrat Armenian light';
     font-size: 13px;
     position: relative;
-    font-family: 'Montserrat Armenian', sans-serif;
-
 }
+
 .menu-item {
     color: hsl(0, 0%, 0%);
 }
+
 .menu-item:hover {
     color: hsl(315, 80%, 20%);
+    text-decoration: none;
 }
 
 .menu-item::before {
     content: "";
     display: inline-block;
-    width: 14px;
-    height: 14px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     background-color: #B760A5;
 }
 
 /* Social Icons */
 .social-area {
-    flex: 0.6;
+    flex: 1.2;
     display: flex;
-    /* justify-content: flex-end; */
 }
+
 .social-icons {
     display: flex;
     gap: 16px;
 }
+
 .social-icon {
-    background-color: #B760A5;
+    width: 27px;
+    height: 27px;
+    background-color: #BF5C9F;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     transition: transform 0.3s ease;
 }
+
 .social-icon:hover {
     transform: scale(1.05);
 }
-.social-icon img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-}
 
 /* Y Logo */
-.y-logo {
-    padding-left: 30px;
-}
+
 .y-logo-img {
     height: 48px;
     width: auto;
+    padding-left: 4%;
+
 }
 
 /* Responsive */
@@ -151,18 +151,22 @@
         gap: 10px;
     }
 }
+
 @media (max-width: 1224px) {
     .menu-nav {
         gap: 40px;
     }
+
     .social-icon {
         width: 36px;
         height: 36px;
     }
+
     .social-icon img {
         width: 22px;
         height: 22px;
     }
+
     .logo-img {
         height: 50px;
     }

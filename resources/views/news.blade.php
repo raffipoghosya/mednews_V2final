@@ -6,17 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MedNews</title>
     <link rel="stylesheet" href="{{ asset('css/interw.css') }}" />
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet" /> -->
 </head>
 
 <body>
+    <!-- Video Modal -->
+    <div id="videoModal" class="custom-modal">
+        <div class="custom-modal-content">
+            <button class="custom-modal-close" id="closeModalBtn">
+                <img src="{{ asset('style/closeIcon.svg') }}" alt="closeIcon" />
+            </button>
+
+            <div class="custom-modal-body">
+                <div class="video-wrapper">
+                    <iframe id="videoFrame" src="" allowfullscreen allow="autoplay"></iframe>
+                </div>
+            </div>
+            <p class="custom-modal-title" id="videoModalLabel">Տեսանյութ</p>
+
+            <img src="{{ asset('style/videoModalLogo.svg') }}" class="videoLogo" alt="Decoration" />
+        </div>
+    </div>
 
     @include('components.header')
 
-    <div class="container">
+    <main>
         <!-- Left Column: News -->
         <div class="news-column">
-            <h1 class="news-heading"><a href="#">Նորություներ</a></h1>
+            <h1 class="news-heading">Լրահոս</h1>
 
             <div class="news-group-card">
                 @foreach($latestNews as $news)
@@ -24,28 +40,23 @@
                         <img src="{{ asset('images/posts/' . ($news->img ?? 'default.jpg')) }}" alt="{{ $news->title }}"
                             onerror="this.onerror=null;this.src='{{ asset('images/posts/default.jpg') }}';" />
                         <div class="news-content">
-                            <h3>
-                                <a href="/single/{{ $news->id }}">{{ $news->title }}</a>
-                            </h3>
-                            <p>{{ Str::limit(strip_tags($news->description), 100) }}</p>
+                            <p class="title">
+                                {{ Str::limit(strip_tags($news->title), 50) }}
+                            </p>
+                            <p class="description">{{ Str::limit(strip_tags($news->description), 350) }}</p>
+                            <a class="readMore" href="/single/{{ $news->id }}">
+                                <p>Կարդալ ավելին</p>
+                            </a>
                             <span class="news-date">{{ \Carbon\Carbon::parse($news->date)->format('d.m.y') }}</span>
                         </div>
                     </div>
                 @endforeach
             </div>
-
-            <!-- Pagination -->
-            <div class="pagination-container">
-                {{ $latestNews->links('vendor.pagination.custom') }}
-            </div>
         </div>
-
-        <!-- Vertical Separator Line -->
-        <div class="separator-line"></div>
 
         <!-- Right Column: Videos and Ads -->
         <div class="ads-column">
-            <h2 class="section-title">ՏԵՍԱՆՅՈՒԹԵՐ</h2>
+            <h2 class="section-title">Տեսանյութեր</h2>
             <div class="slider-wrapper">
                 <div class="slider-track">
                     @foreach($video as $vid)
@@ -62,15 +73,13 @@
                                     alt="{{ $vid->title }}" />
                                 <div class="play-button">&#9658;</div>
                             </div>
-                            <p>{{ $vid->title }} / {{ $vid->author }}</p>
+                            <p class="videoTitle">{{ $vid->title }} / {{ $vid->author }}</p>
                         </div>
                     @endforeach
                 </div>
             </div>
         </div>
 
-
-        <!-- Ads Section -->
         <div class="ad-items">
             @foreach($reclambanners as $banner)
                 <div class="ad-item">
@@ -80,74 +89,42 @@
                 </div>
             @endforeach
         </div>
+    </main>
+    <!-- Pagination  -->
+    <div class="pagination-container">
+        {{ $latestNews->links('vendor.pagination.custom') }}
     </div>
-
-
-
     @include('components.footer')
 
 
-    <!-- Video modal -->
-    <div id="videoModal"
-        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:9999;">
-        <div style="position:relative; width:80%; max-width:900px;">
-            <button id="closeModal"
-                style="position:absolute; top:-30px; right:0; font-size:30px; color:white; background:none; border:none; cursor:pointer;">&times;</button>
-            <iframe id="videoFrame" width="100%" height="450" frameborder="0" allowfullscreen allow="autoplay"></iframe>
-        </div>
-    </div>
+  
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = document.getElementById('videoModal');
-            const iframe = document.getElementById('videoFrame');
-            const closeModalBtn = document.getElementById('closeModal');
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("videoModal");
+            const videoFrame = document.getElementById("videoFrame");
+            const closeModalBtn = document.getElementById("closeModalBtn");
 
-            document.querySelectorAll('.video-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const videoUrl = card.getAttribute('data-video');
-                    if (!videoUrl) {
-                        alert('Չհաջողվեց գտնել վիդեոյի հղումը։');
-                        return;
-                    }
-                    iframe.src = videoUrl + '?autoplay=1&rel=0';
-                    modal.style.display = 'flex';
+            document.querySelectorAll(".video-card, .video-card-short").forEach((card) => {
+                card.addEventListener("click", () => {
+                    const videoSrc = card.getAttribute("data-video");
+            const title = card.getAttribute("data-title") || card.querySelector(".videoTitle")?.textContent || "Տեսանյութ";
+                    document.getElementById("videoModalLabel").innerText = title;
+                    videoFrame.src = videoSrc + "?autoplay=1&rel=0";
+                    modal.style.display = "flex";
                 });
             });
 
-            closeModalBtn.addEventListener('click', () => {
-                iframe.src = '';  // դադարեցնել նվագարկումը
-                modal.style.display = 'none';
+            closeModalBtn.addEventListener("click", () => {
+                modal.style.display = "none";
+                videoFrame.src = "";
             });
 
-            modal.addEventListener('click', (e) => {
+            // Close modal when clicking outside the content
+            modal.addEventListener("click", (e) => {
                 if (e.target === modal) {
-                    iframe.src = '';
-                    modal.style.display = 'none';
+                    modal.style.display = "none";
+                    videoFrame.src = "";
                 }
-            });
-        });
-    </script>
-
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('.video-card').on('click', function () {
-                const videoSrc = $(this).data('video');
-
-                if (videoSrc && videoSrc.includes("youtube.com")) {
-                    const embedSrc = videoSrc.replace("watch?v=", "embed/");
-                    $('#videoFrame').attr('src', embedSrc + "?autoplay=1");
-                    $('#videoModal').modal('show');
-                } else {
-                    alert("Տեսանյութի հղումը սխալ է կամ բացակայում է։");
-                }
-            });
-
-            $('#videoModal').on('hidden.bs.modal', function () {
-                $('#videoFrame').attr('src', '');
             });
         });
     </script>
