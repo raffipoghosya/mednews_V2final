@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Armenian:wght@400;600&display=swap');
-
-body{
+body {
     max-width: 100%;
+    font-family: 'Montserrat Armenian';
 }
+
 .news-section {
     padding: 1% 0% 1%;
     background-color: #fafafa;
@@ -11,77 +11,68 @@ body{
 
 .news-container {
     max-width: 100%;
-    margin: 0 auto;
     display: flex;
     gap: 0;
     justify-content: space-between;
     align-items: flex-start;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     position: relative;
+    margin: 2% 4% 0%;
 }
 
-/* Բաժանող գիծ միջեւ սյունակներ */
-.news-container::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 40px;
-    bottom: 40px;
-    width: 2px;
-    background-color: #816578;
-    transform: translateX(-50%);
+.divider {
+    width: 1.5px;
+    background-color: #EAEAEA;
+    height: 595px;
+    margin: 0 1%;
+    position: relative;
     z-index: 1;
 }
 
 .news-column {
-    width: 50%;
-    padding: 0 30px;
+    width: 48%;
     box-sizing: border-box;
     position: relative;
     z-index: 2;
-    margin-top: 2%;
-}
+    height: 550px;
 
-/* Աջ սյունակ՝ բալանսի համար */
-.news-column:nth-child(2) {
-    /* margin-top: 0px; Կարող ես fine-tune անել */
-    margin-top: 2%;
 }
 
 .news-heading {
     font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 30px;
+    margin-bottom: 13px;
+    margin-left: 30px;
     color: #833F6D;
     text-transform: uppercase;
+    font-family: 'Montserrat Armenian semiBold';
 }
 
 .news-heading a {
     font-size: 24px;
     color: #833F6D;
     text-decoration: none;
-    font-family: 'Montserrat Armenian', sans-serif;
 }
 
 .news-group-card {
-    background-color: #f3f3f3;
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     margin-bottom: 30px;
     min-height: 100%;
+
 }
 
 .news-group-card .news-card {
-    background-color: #e6e6e6;
-    box-shadow: none;
+    background-color: #F9F9F9;
+    box-shadow: 1.57px 1.57px 1.57px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
-    padding: 15px;
     border-radius: 10px;
     display: flex;
-    gap: 15px;
-    align-items: flex-start;
+    align-items: center;
     transition: transform 0.3s ease;
+    height: 160px;
+    overflow: hidden;
 }
 
 .news-group-card .news-card:last-child {
@@ -93,16 +84,26 @@ body{
 }
 
 .news-card img {
-    width: 150px;
-    height: 100px;
+    width: 170px;
+    height: 160px;
     object-fit: cover;
     border-radius: 10px;
+    display: block;
+}
+
+.news-content {
+    padding-left: 20px;
+    padding-right: 25px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .news-content h3 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 13px;
+    font-family: 'Montserrat Armenian light';
+    margin-bottom: 8px;
+    color: #151515;
 }
 
 .news-content h3 a {
@@ -116,7 +117,6 @@ body{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
-    font-family: 'Montserrat Armenian', sans-serif;
     font-size: 13px;
 }
 
@@ -127,16 +127,100 @@ body{
 
 .news-content p {
     font-size: 11.5px;
-    color: #444;
-    margin-bottom: 10px;
-    font-family: 'Montserrat Armenian', sans-serif;
+    color: #4E4E4E;
+    line-height: 147%;
+
 }
 
 .news-date {
-    font-size: 12px;
-    color: #999;
+    font-size: 9px;
+    color: #AFAFAF;
+    font-family: 'Montserrat Armenian light';
+    position: absolute;
+    bottom: -20px;
+    right: 20px;
+}
+/* Modal Overlay */
+.custom-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
 
+/* Modal Content Frame */
+.custom-modal-content {
+    background-color: #262626;
+    padding: 20px;
+    border-radius: 20px;
+    max-width: 800px;
+    width: 100%;
+    position: relative;
+}
+
+/* Close Button */
+.custom-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Video Container */
+.custom-modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.video-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.video-wrapper iframe {
+    width: 90%;
+    height: 50vh;
+    border: none;
+    border-radius: 25px;
+    background: #000;
+}
+
+/* Title under video */
+.custom-modal-title {
+    font-size: 14px;
+    color: #FFFFFF;
+    font-family: 'Montserrat Armenian semiBold';
+    text-align: start;
+    width: 70%;
+    margin-left: 60px;
+    margin-bottom: 70px;
+
+}
+
+/* Decorative SVG in corner */
+.videoLogo {
+    position: absolute;
+    bottom: 48px;
+    right: 40px;
+    width: 140px;
+    height: auto;
+}
 /* Responsive */
 @media (max-width: 768px) {
     .news-container {

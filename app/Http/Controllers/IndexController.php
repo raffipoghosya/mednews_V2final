@@ -108,7 +108,7 @@ class IndexController extends Controller
             ->where('published', 1)
             ->where('id', '!=', $lastPost->id)
             ->orderBy('date', 'desc')
-            ->take(9)
+            ->take(12)
             ->get();
 
         $advertisements = Reclam::query()
@@ -123,7 +123,7 @@ class IndexController extends Controller
             ->take(3)
             ->get();
 
-        $videos = Video::orderby('id', 'desc')->take(6)->get();
+        $videos = Video::orderby('id', 'desc')->take(8)->get();
 
         return view('index')->with([
             'lastPost' => $lastPost,
@@ -144,7 +144,7 @@ class IndexController extends Controller
                 $query->where('slug', 'norutyun');
             })
             ->orderBy('date', 'desc')
-            ->paginate(6);
+            ->paginate(7);
 
         // Ամենաշատ դիտված 3 նորությունները
         $mostRead = Post::where('published', 1)
@@ -208,7 +208,7 @@ class IndexController extends Controller
                 $query->where('title', 'Հարցազրույց');
             })
             ->orderBy('date', 'desc')
-            ->paginate(6);
+            ->paginate(7);
 
         $mostRead = Post::where('published', 1)
             ->orderBy('votes', 'desc')

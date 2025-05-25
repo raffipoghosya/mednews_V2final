@@ -92,8 +92,8 @@
                         </div>
                     </div>
                     <style>
-                        .single-content p{color:black!important;font-family:Sylfaen!important;font-size:17px!important;}
-                        .single-content p span{color:black!important;font-family:Sylfaen!important;font-size:17px!important;}
+                        .single-content p{color:black!important;font-size:17px!important;}
+                        .single-content p span{color:black!important;font-size:17px!important;}
                     </style>
                     <div class="col-md-6 new-padding" style="background: #f6f7f9;">
                         <div class="single-content">

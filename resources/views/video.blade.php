@@ -6,8 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MedNews</title>
     <link rel="stylesheet" href="{{ asset('css/video1.css') }}" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
+
+   <!-- Video Modal -->
+    <div id="videoModal" class="custom-modal">
+    <div class="custom-modal-content">
+        <button class="custom-modal-close" id="closeModalBtn">
+             <img src="{{ asset('style/closeIcon.svg') }}" alt="closeIcon" />
+        </button>
+        
+        <div class="custom-modal-body">
+        <div class="video-wrapper">
+            <iframe id="videoFrame" src="" allowfullscreen allow="autoplay"></iframe>
+        </div>
+        </div>
+   <p class="custom-modal-title" id="videoModalLabel">Տեսանյութ</p>
+
+        <img src="{{ asset('style/videoModalLogo.svg') }}" class="videoLogo" alt="Decoration" />
+    </div>
+    </div>
 
 <body>
 
@@ -16,8 +33,7 @@
     <div class="container-fluid">
 
         <!-- Video Gallery Section (slider) -->
-        <section class="video-gallery">
-    <h2 class="section-title">ՏԵՍԱՆՅՈՒԹԵՐ</h2>
+    <h2 class="section-title">ՏԵՍԱԴԱՐԱՆ</h2>
     <div class="video-container">
         @for ($i = 0; $i < 20; $i++)
             @php 
@@ -29,13 +45,12 @@
             <div class="video-card" data-video="{{ $videoSrc }}" data-title="{{ $vid->title }}" style="cursor: pointer;">
                 <div class="video-thumb">
                     <img src="{{ asset('images/videos/' . $vid->img) }}" alt="Video" />
-                    <div class="play-button">&#9658;</div>
+                    <img src="{{ asset('style/play_button.svg') }}" alt="Play Button" class="play-button">
                 </div>
                 <p>{{ $vid->title }} / {{ $vid->author }}</p>
             </div>
         @endfor
     </div>
-</section>
 
 
 
@@ -52,7 +67,7 @@
                     <div class="video-card-short" data-video="{{ $shortVideoSrc }}" data-title="{{ $short->title }}" style="cursor: pointer;">
                         <div class="video-thumb">
                             <img src="{{ asset('images/videos/' . ($short->img ?? 'default.jpg')) }}" alt="{{ $short->title }}" />
-                            <div class="play-button">&#9658;</div>
+                             <img src="{{ asset('style/play_button.svg') }}" alt="Play Button" class="play-button">
                         </div>
                         <p>{{ $short->title }} / {{ $short->author }}</p>
                     </div>
@@ -64,9 +79,9 @@
                 <ul class="pagination pagination-centered">
                     {{-- Previous Page Link --}}
                     @if ($shorts->onFirstPage())
-                        <li class="disabled"><span>&lsaquo;</span></li>
+                        <li class="disabled"><span><img src="{{ asset('style/paginationLeft.svg') }}" alt="Arrow"></span></li>
                     @else
-                        <li><a href="{{ $shorts->previousPageUrl() }}" rel="prev">&lsaquo;</a></li>
+                        <li><a href="{{ $shorts->previousPageUrl() }}" rel="prev"><img src="{{ asset('style/paginationLeftDisabled.svg') }}" alt="Arrow"></a></li>
                     @endif
 
                     @php
@@ -93,15 +108,15 @@
 
                     @if ($end < $total)
                         @if ($end < $total - 1)
-                            <li class="disabled"><span>...</span></li>
+                            <li class="disabled"><span style = 'color: #274F73;'>...</span></li>
                         @endif
                         <li><a href="{{ $shorts->url($total) }}">{{ $total }}</a></li>
                     @endif
 
                     @if ($shorts->hasMorePages())
-                        <li><a href="{{ $shorts->nextPageUrl() }}" rel="next">&rsaquo;</a></li>
+                        <li><a href="{{ $shorts->nextPageUrl() }}" rel="next"><img src="{{ asset('style/paginationRight.svg') }}" alt="Arrow"></a></li>
                     @else
-                        <li class="disabled"><span>&rsaquo;</span></li>
+                        <li class="disabled"><span><img src="{{ asset('style/paginationRightDisabled.svg') }}" alt="Arrow"></span></li>
                     @endif
                 </ul>
             @endif
@@ -111,47 +126,40 @@
 
     @include('components.footer')
 
-    <!-- Video Modal -->
-    <div id="videoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="videoModalLabel">Տեսանյութ</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Փակել">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="embed-responsive embed-responsive-16by9">
-              <iframe id="videoFrame" class="embed-responsive-item" src="" allowfullscreen allow="autoplay"></iframe>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+ 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("videoModal");
+            const videoFrame = document.getElementById("videoFrame");
+            const closeModalBtn = document.getElementById("closeModalBtn");
 
-    <script>
-    $(document).ready(function() {
-        // Բացել modal տեսանյութի վրա սեղմելիս
-        $('.video-card, .video-card-short').on('click', function() {
-            var videoSrc = $(this).data('video');
-            var title = $(this).data('title') || 'Տեսանյութ';
+            document.querySelectorAll(".video-card, .video-card-short").forEach((card) => {
+            card.addEventListener("click", () => {
+                const videoSrc = card.getAttribute("data-video");
+                const title = card.getAttribute("data-title") || "Տեսանյութ";
 
-            $('#videoModalLabel').text(title);
-            $('#videoFrame').attr('src', videoSrc + "?autoplay=1&rel=0");
+                document.getElementById("videoModalLabel").innerText = title;
+                videoFrame.src = videoSrc + "?autoplay=1&rel=0";
+                modal.style.display = "flex";
+            });
+            });
 
-            $('#videoModal').modal('show');
+            closeModalBtn.addEventListener("click", () => {
+            modal.style.display = "none";
+            videoFrame.src = "";
+            });
+
+            // Close modal when clicking outside the content
+            modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+                videoFrame.src = "";
+            }
+            });
         });
-
-        // Modal փակելիս iframe src հանել, որ տեսանյութը կանգնի
-        $('#videoModal').on('hidden.bs.modal', function () {
-            $('#videoFrame').attr('src', '');
-        });
-    });
     </script>
+
 
 </body>
 
