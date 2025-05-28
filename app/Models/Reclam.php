@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reclam extends Model
 {
-    protected $table = "reclam";
-    public $timestamps = false;
+    protected $table = 'reclam';
+
+    protected $fillable = [
+        'href',
+        'page',
+        'position',
+        'image',
+    ];
 }

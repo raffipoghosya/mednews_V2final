@@ -103,36 +103,37 @@ class IndexController extends Controller
             ->where('published', 1)
             ->orderBy('date', 'desc')
             ->firstOrFail();
-
+    
         $lastPosts = Post::query()
             ->where('published', 1)
             ->where('id', '!=', $lastPost->id)
             ->orderBy('date', 'desc')
             ->take(12)
             ->get();
-
-        $advertisements = Reclam::query()
-            ->where('type', 'top')
-            ->where('page', 'index')
-            ->orderby('id', 'desc')
-            ->get();
-
+    
         $mostViewed = Post::query()
             ->where('published', 1)
             ->orderBy('votes', 'desc')
             ->take(3)
             ->get();
-
+    
         $videos = Video::orderby('id', 'desc')->take(8)->get();
-
-        return view('index')->with([
+    
+        $advertisements = Reclam::where('page', 'index')
+            ->orderBy('id', 'desc')
+            ->get();
+      
+     
+    
+        return view('index', [
             'lastPost' => $lastPost,
             'lastPosts' => $lastPosts,
-            'advertisements' => $advertisements,
             'mostViewed' => $mostViewed,
             'videos' => $videos,
+            'advertisements' => $advertisements,
         ]);
     }
+    
     public function news()
     {
         $now = Carbon::now()->format('Y-m-d');
@@ -201,7 +202,7 @@ class IndexController extends Controller
     public function interview()
     {
         $now = Carbon::now()->format('Y-m-d');
-
+    
         $interviews = Post::where('published', 1)
             ->where('selected', 0)
             ->whereHas('categories', function ($query) {
@@ -209,29 +210,27 @@ class IndexController extends Controller
             })
             ->orderBy('date', 'desc')
             ->paginate(7);
-
         $mostRead = Post::where('published', 1)
             ->orderBy('votes', 'desc')
             ->take(3)
             ->get();
-
+    
         $category = Category::all();
         $video = Video::orderBy('id', 'desc')->take(5)->get();
-        $banner = Banner::orderBy('id', 'desc')->first();
-        $reclambanners = Reclam::where('type', 'banner')
-            ->where('page', 'index')
+        
+        $cats = Category::orderBy('id', 'asc')->get();
+    
+        $interviewAdvertisements = Reclam::where('page', 'interview')
             ->orderBy('id', 'desc')
             ->get();
-        $cats = Category::orderBy('id', 'asc')->get();
-
+    
         return view('interview', compact(
             'interviews',
             'mostRead',
             'category',
             'video',
-            'banner',
-            'reclambanners',
-            'cats'
+            'cats',
+            'interviewAdvertisements'
         ));
     }
 

@@ -7,23 +7,24 @@
     <title>MedNews</title>
     <link rel="stylesheet" href="{{ asset('css/interw.css') }}" />
 </head>
- <!-- Video Modal -->
-    <div id="videoModal" class="custom-modal">
+<!-- Video Modal -->
+<div id="videoModal" class="custom-modal">
     <div class="custom-modal-content">
         <button class="custom-modal-close" id="closeModalBtn">
-             <img src="{{ asset('style/closeIcon.svg') }}" alt="closeIcon" />
+            <img src="{{ asset('style/closeIcon.svg') }}" alt="closeIcon" />
         </button>
-        
+
         <div class="custom-modal-body">
-        <div class="video-wrapper">
-            <iframe id="videoFrame" src="" allowfullscreen allow="autoplay"></iframe>
+            <div class="video-wrapper">
+                <iframe id="videoFrame" src="" allowfullscreen allow="autoplay"></iframe>
+            </div>
         </div>
-        </div>
-    <p class="custom-modal-title" id="videoModalLabel">Տեսանյութ</p>
+        <p class="custom-modal-title" id="videoModalLabel">Տեսանյութ</p>
 
         <img src="{{ asset('style/videoModalLogo.svg') }}" class="videoLogo" alt="Decoration" />
     </div>
-    </div>
+</div>
+
 <body>
 
     @include('components.header')
@@ -78,16 +79,16 @@
                 </div>
             </div>
         </div>
-
-        <div class="ad-items">
-            @foreach($reclambanners as $banner)
-                <div class="ad-item">
-                    <a href="{{ $banner->href ?? '#' }}" target="_blank" rel="noopener noreferrer">
-                        <img src="{{ asset('images/reclam/' . $banner->img) }}" alt="Ad {{ $loop->iteration }}" />
-                    </a>
-                </div>
+        <div class="ad-banner" id="ad-banner">
+            @foreach($interviewAdvertisements as $key => $item)
+                <a href="{{ $item->href }}" target="_blank" class="ad-slide"
+                    style="display: {{ $key === 0 ? 'block' : 'none' }};">
+                    <img src="{{ asset('storage/' . $item->image) }}" class="ad-image" alt="Ad {{ $key + 1 }}">
+                </a>
             @endforeach
         </div>
+
+
     </main>
     <!-- Pagination  -->
     <div class="pagination-container">
@@ -101,26 +102,26 @@
             const closeModalBtn = document.getElementById("closeModalBtn");
 
             document.querySelectorAll(".video-card, .video-card-short").forEach((card) => {
-            card.addEventListener("click", () => {
-                const videoSrc = card.getAttribute("data-video");
-                const title = card.getAttribute("data-title") || card.querySelector(".videoTitle")?.textContent || "Տեսանյութ";
-                document.getElementById("videoModalLabel").innerText = title;
-                videoFrame.src = videoSrc + "?autoplay=1&rel=0";
-                modal.style.display = "flex";
-            });
+                card.addEventListener("click", () => {
+                    const videoSrc = card.getAttribute("data-video");
+                    const title = card.getAttribute("data-title") || card.querySelector(".videoTitle")?.textContent || "Տեսանյութ";
+                    document.getElementById("videoModalLabel").innerText = title;
+                    videoFrame.src = videoSrc + "?autoplay=1&rel=0";
+                    modal.style.display = "flex";
+                });
             });
 
             closeModalBtn.addEventListener("click", () => {
-            modal.style.display = "none";
-            videoFrame.src = "";
+                modal.style.display = "none";
+                videoFrame.src = "";
             });
 
             // Close modal when clicking outside the content
             modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.style.display = "none";
-                videoFrame.src = "";
-            }
+                if (e.target === modal) {
+                    modal.style.display = "none";
+                    videoFrame.src = "";
+                }
             });
         });
     </script>
