@@ -24,11 +24,11 @@
                                     տեսասրահում և օգտվել insert image կնոպկից</p>
                             </div>
                             <div class="form-group">
-                                <input type="number" class="form-control" name="votes" placeholder="Ավելացնել դիտումներ"
+                                <input style="width: 28% !important" type="number" class="form-control" name="votes" placeholder="Ավելացնել դիտումներ"
                                     value="{{$post->votes}}">
                             </div>
                             <div class="form-group">
-                                <input type="date" class="form-control" name="date" value="{{$post->date}}">
+                                <input style="width: 28% !important" type="date" class="form-control" name="date" value="{{$post->date}}">
                                 <p class='smalldate' style='width:200px;height:14px;'>Հայտարարության ամսաթիվը՝
                                     {{$post->date}}
                                 </p>
@@ -64,10 +64,10 @@
                             </div>
                             <div class="form-group">
                                 @if($post->top == 1)
-                                    <label>Տեղադրել հայտարարությունը թոփում?
+                                    <label>ցուցադրել թոփում?
                                         <input type="checkbox" name="top" value="1" checked></label>
                                 @else
-                                    <label>Տեղադրել հայտարարությունը թոփում?
+                                    <label>ցուցադրել թոփում?
                                         <input type="checkbox" name="top" value="1"></label>
                                 @endif
                             </div>
@@ -80,7 +80,7 @@
                                         <input type="checkbox" name="published" value="1"></label>
                                 @endif
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 @if($post->slide == 1)
                                     <label>Ցուցադրել սլայդը?
                                         <input type="checkbox" name="slide" value="1" checked></label>
@@ -88,7 +88,7 @@
                                     <label>Ցուցադրել սլայդը?
                                         <input type="checkbox" name="slide" value="1"></label>
                                 @endif
-                            </div>
+                            </div> -->
 
                             <div class="form-group d-flex justify-content-between align-items-center">
                                 <label for="norutyun" class="mb-0">Նորություն</label>

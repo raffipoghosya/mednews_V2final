@@ -10,13 +10,13 @@
                     <input type="text" class="form-control" name="title" placeholder="Վերնագիր" required>
                 </div>
                 <div class="form-group">
-                    <label>Տեղադրել հղումը Youtube-ից</label>
-                    <textarea class="form-control" name="iframe" rows="15" placeholder="Տեղադրել հղումը Youtube-ից" required></textarea>
+                    <label>Տեղադրել հղումը Youtube-ից iframe  հղում</label>
+                    <textarea class="form-control" name="iframe" rows="15" placeholder="Տեղադրել հղումը Youtube-ից iframe  հղում" required></textarea>
                 </div>                
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label>Կարճ նկարագիր</label>
                     <textarea class="form-control" name="description" rows="15" placeholder="Կարճ նկարագիր" required></textarea>
-                </div>                
+                </div>                 -->
                 <div class="form-group">
                     <label>Ներբեռնել գլխավոր նկարը</label>
                     <input type="file" class="form-control" name="img" required>

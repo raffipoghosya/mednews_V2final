@@ -10,11 +10,11 @@
                     <input type="text" class="form-control" name="title" placeholder="Վերնագիր" value="{{$video->title}}" required>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" name="iframe" rows="10" placeholder="Տեղադրել հղումը Youtube-ից" required>{{$video->iframe}}</textarea>
+                    <textarea class="form-control" name="iframe" rows="10" placeholder="Տեղադրել հղումը Youtube-ից  <iframe>  հղում" required>{{$video->iframe}}</textarea>
                 </div>                
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <textarea class="form-control" name="description" rows="10" placeholder="Կարճ նկարագիր" required>{{$video->description}}</textarea>
-                </div>                
+                </div>                 -->
                 <div class="form-group">
                     <p class="small text-info">Գլխավոր նկարը`</p>   
                     <img width="200" src="/images/videos/{{$video->img}}" class="img-responsive">

@@ -13,11 +13,11 @@
                         <input type="text" class="form-control" name="anons" placeholder="Կարճ նկարագրություն" required>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control summernote" name="description" rows="15"
+                        <textarea id="description" class="form-control summernote" name="description" rows="15"
                             placeholder="Մանրամասն նկարագիր" required></textarea>
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" name="votes" placeholder="Ավելացնել դիտումներ">
+                        <input style="width: 28% !important" type="number" class="form-control" name="votes" placeholder="Ավելացնել դիտումներ">
                     </div>
                     <div class="form-group">
                         <input type="date" class="form-control" name="date">
@@ -35,18 +35,18 @@
                         <div id='erase-area' class="gallery upgallery"></div>
                     </div>
                     <div class="form-group">
-                        <label>Տեղադրել հայտարարությունը թոփում?
+                        <label>ցուցադրել թոփում?
                             <input type="checkbox" name="top" value="1"></label>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>Ցուցադրել սլայդը?
                             <input type="checkbox" name="slide" value="1"></label>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label>Հրապարակել?
                             <input type="checkbox" checked name="published" value="1"></label>
                     </div>
-                   
+
                     <div class="form-group">
                         <div class="form-group d-flex justify-content-between align-items-center">
                             <label for="norutyun" class="mb-0">Նորություն</label>
@@ -58,12 +58,39 @@
                         </div>
 
                         <div class="form-group">
-                            <input onclick="document.getElementById('form-id').submit();" class="btn btn-success"
-                                value="Ավելացնել">
+                            <input type="submit" class="btn btn-success" value="Ավելացնել">
                             <input type="reset" class="btn btn-danger" value="Չեղարկել">
                         </div>
                 </form>
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <!-- Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
+    <!-- Summernote JS -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                height: 300,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'hr']],
+                    ['view', ['fullscreen', 'codeview']],
+                    ['help', ['help']]
+                ]
+            });
+        });
+    </script>
 @endsection

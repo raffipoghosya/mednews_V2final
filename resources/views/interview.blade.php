@@ -31,7 +31,7 @@
     <main>
         <!-- Left Column: News -->
         <div class="news-column">
-            <h1 class="news-heading">Հարցազրույցներ</h1>
+            <h1 class="news-heading">ՀԱՐՑԱԶՐՈՒՅՑ</h1>
 
             <div class="news-group-card">
                 @foreach($interviews as $news)
@@ -55,7 +55,7 @@
 
         <!-- Right Column: Videos and Ads -->
         <div class="ads-column">
-            <h2 class="section-title">Տեսանյութեր</h2>
+            <h2 class="section-title">ՏԵՍԱԴԱՐԱՆ</h2>
             <div class="slider-wrapper">
                 <div class="slider-track">
                     @foreach($video as $vid)
