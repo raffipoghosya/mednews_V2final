@@ -1,38 +1,24 @@
-@extends('layouts.app')
+<form action="{{ route('reclam.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
 
-@section('content')
-<div class="container-fluid">
-    <div class="row admin-panel">
-        <div class="col-md-8 col-md-offset-2">
-            <form action="/newreclam" method="post" enctype="multipart/form-data">
-                {{ csrf_field() }}
-                <div class="form-group">
-                    <input type="text" class="form-control" name="href" placeholder="Հղումը" required>
-                </div>     
-                <div class="form-group">
-                    <select name="type" class="form-control">
-                        <option value="">Ընտրել</option>
-                        <option value="top">Վերևում</option>
-                        <option value="bottom">Ներքևում</option>
-                    </select>
-                </div>               
-                <div class="form-group">
-                    <select name="page" class="form-control">
-                        <option value="">Ընտրել</option>
-                        <option value="index">Առաջին էջ</option>
-                        <option value="single">Ներքին էջ</option>
-                    </select>
-                </div>               
-                <div class="form-group">
-                    <label>Ներբեռնել գովազդի նկարը</label>
-                    <input type="file" class="form-control" name="img" required>
-                </div>              
-                <div class="form-group">
-                    <input type="submit" class="btn btn-success" value="Ավելացնել">
-                    <input type="reset" class="btn btn-danger" value="Չեղարկել">
-                </div>
-            </form>
-        </div>
-    </div>    
-</div>
-@endsection
+    <input type="url" name="href" placeholder="https://example.com" required>
+
+    <select name="page" required>
+        <option value="index">Գլխավոր էջ</option>
+        <option value="news">Նորություններ</option>
+        <option value="interview">Հարցազրույց</option>
+        <option value="single">Բացված Նորություն</option>
+    </select>
+
+    <select name="position" required>
+        <option value="top">Վերև</option>
+        <option value="bottom">Ներքև</option>
+        <option value="right_top">Աջ անկյուն վերև (բացված)</option>
+        <option value="right_bottom">Աջ անկյուն ներքև (բացված)</option>
+        <option value="bottom_large">Ներքև (բացված)</option>
+    </select>
+
+    <input type="file" name="img" accept="image/*" required>
+
+    <button type="submit">Ավելացնել Գովազդ</button>
+</form>

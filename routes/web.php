@@ -8,6 +8,12 @@ use App\Http\Controllers\SingleController;
 use App\Http\Controllers\CatController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AdminController;
+
+use App\Http\Controllers\ReclamController;
+
+Route::get('/adminnewreclam', [ReclamController::class, 'create'])->name('reclam.create');
+Route::post('/adminnewreclam', [ReclamController::class, 'store'])->name('reclam.store');
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

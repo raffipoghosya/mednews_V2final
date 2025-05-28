@@ -81,14 +81,18 @@
     </main>
 
     <!-- Reclambanner -->
-    <div class="ad-banner">
-        @foreach($advertisements as $key => $item)
-            <a href="{{ $item->href }}" target="_blank">
-                <img src="{{ asset('images/reclam/' . $item->img) }}" class="ad-image {{ $key === 0 ? 'active' : '' }}"
-                    alt="Ad {{ $key + 1 }}">
-            </a>
-        @endforeach
-    </div>
+    <div class="ad-banner" id="ad-banner">
+    @foreach($advertisements as $key => $item)
+        <a href="{{ $item->href }}" target="_blank" class="ad-slide" style="display: {{ $key === 0 ? 'block' : 'none' }};">
+            <img src="{{ asset('storage/' . $item->image) }}"
+                 class="ad-image"
+                 alt="Ad {{ $key + 1 }}">
+        </a>
+    @endforeach
+</div>
+
+
+
 
     <!-- News Section -->
     <!-- <section class="news-section"> -->
@@ -147,9 +151,9 @@
             <div class="slider-track">
                 @foreach($videos as $video)
                     @php
-                        // iframe src-ի արժեքը կստանանք regex-ով՝ $video->iframe դաշտից
-                        preg_match('/src="([^"]+)"/', $video->iframe, $matches);
-                        $videoSrc = $matches[1] ?? '';
+    // iframe src-ի արժեքը կստանանք regex-ով՝ $video->iframe դաշտից
+    preg_match('/src="([^"]+)"/', $video->iframe, $matches);
+    $videoSrc = $matches[1] ?? '';
                     @endphp
                 <div class="video-card" data-video="{{ $videoSrc }}" data-title="{{ $video->title }}">
                         <div class="video-thumb" style="cursor: pointer;">
@@ -290,6 +294,28 @@
             checkArrows();
         });
     </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const slides = document.querySelectorAll('#ad-banner .ad-slide');
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+
+        setInterval(() => {
+            // Հետ դ隐藏 текущее изображение
+            slides[currentIndex].style.display = 'none';
+
+            // Փոխում ենք ինդեքսը հաջորդի
+            currentIndex = (currentIndex + 1) % totalSlides;
+
+            // Ցույց ենք տալիս հաջորդ նկարը
+            slides[currentIndex].style.display = 'block';
+        }, 7000); // 7000 ms = 7 վարկյան
+    });
+</script>
+
+
+
+
 
 </body>
 
