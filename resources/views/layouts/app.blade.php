@@ -142,5 +142,48 @@
     });
 
 </script>
+<!-- In the head section -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+
+<!-- At the bottom of the body, before closing </body> tag -->
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="js/component.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.summernote').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video', 'hr']],
+                ['view', ['fullscreen', 'codeview', 'help']],
+                ['history', ['undo', 'redo']]
+            ],
+            callbacks: {
+                onImageUpload: function(files) {
+                    // Handle image uploads here
+                    for (let i = 0; i < files.length; i++) {
+                        uploadImage(files[i]);
+                    }
+                }
+            }
+        });
+        
+        function uploadImage(file) {
+            // You'll need to implement server-side image upload handling
+            console.log('Image upload would happen here', file);
+        }
+    });
+</script>
 </body>
 </html>

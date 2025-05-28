@@ -1,6 +1,7 @@
 /* Header Wrapper */
 
 .custom-header {
+    /* position: fixed; */
     display: flex;
     align-items: center;
     justify-content: space-between;

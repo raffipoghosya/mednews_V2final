@@ -24,13 +24,13 @@
         <div class="col-md-2 text-center ad">
             <a href="/adminallvideo">
                 <i class="fa fa-pie-chart fa-3x" aria-hidden="true"></i>
-                <p>Բոլոր տեսանյութերը</p>
+                <p>Բոլոր ՏԵՍԱԴԱՐԱՆը</p>
             </a>
         </div>  
         <div class="col-md-2 text-center ad">
             <a href="/adminnewvideo">
                 <i class="fa fa-youtube fa-3x" aria-hidden="true"></i>
-                <p>Ավելացնել տեսանյութեր Youtube-ից</p>
+                <p>Ավելացնել ՏԵՍԱԴԱՐԱՆ Youtube-ից</p>
             </a>
         </div> 
         <div class="col-md-2 text-center ad">

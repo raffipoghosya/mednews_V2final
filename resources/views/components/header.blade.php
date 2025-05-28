@@ -22,7 +22,7 @@
                 <ul class="menu-nav">
                     <li><a href="{{ url('/interview') }}" class="menu-item">ՀԱՐՑԱԶՐՈՒՅՑ</a></li>
                     <li><a href="{{ url('/news') }}" class="menu-item">ՆՈՐՈՒԹՅՈՒՆ</a></li>
-                    <li><a href="{{ url('/videos') }}" class="menu-item">ՏԵՍԱՆՅՈՒԹ</a></li>
+                    <li><a href="{{ url('/videos') }}" class="menu-item">ՏԵՍԱԴԱՐԱՆ</a></li>
                 </ul>
             </nav>
 

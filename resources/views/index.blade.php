@@ -29,7 +29,9 @@
         </div>
     </div>
     
-<body style="display: flex; flex-direction: column; min-height: 100vh;">
+<body style="display: flex; flex-direction: column; min-height: 100vh;   overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;">
     @include('components.header')
 
     @php $fallback = asset('images/posts/default.jpg'); @endphp
@@ -141,7 +143,7 @@
             <img src="{{ asset('style/left.svg') }}" alt="Left Arrow" class="arrow">
         </button>
         <div class="slider-wrapper">
-            <h2 class="section-title">ՏԵՍԱՆՅՈՒԹԵՐ</h2>
+        <a style="text-decoration: none;" href="/videos"><h2 class="section-title">ՏԵՍԱԴԱՐԱՆ</h2></a>
             <div class="slider-track">
                 @foreach($videos as $video)
                     @php
