@@ -80,13 +80,12 @@
             </div>
         </div>
 
-        <div class="ad-items">
-            @foreach($reclambanners as $banner)
-                <div class="ad-item">
-                    <a href="{{ $banner->href ?? '#' }}" target="_blank" rel="noopener noreferrer">
-                        <img src="{{ asset('images/reclam/' . $banner->img) }}" alt="Ad {{ $loop->iteration }}" />
-                    </a>
-                </div>
+        <div class="side-ad-banner" id="ad-banner">
+            @foreach($newsAdvertisements as $key => $item)
+                <a href="{{ $item->href }}" target="_blank" class="ad-slide"
+                    style="display: {{ $key === 0 ? 'block' : 'none' }};">
+                    <img src="{{ asset('storage/' . $item->image) }}" class="ad-image" alt="Ad {{ $key + 1 }}">
+                </a>
             @endforeach
         </div>
     </main>

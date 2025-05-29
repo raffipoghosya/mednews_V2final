@@ -79,7 +79,7 @@
                 </div>
             </div>
         </div>
-        <div class="ad-banner" id="ad-banner">
+        <div class="side-ad-banner" id="ad-banner">
             @foreach($interviewAdvertisements as $key => $item)
                 <a href="{{ $item->href }}" target="_blank" class="ad-slide"
                     style="display: {{ $key === 0 ? 'block' : 'none' }};">

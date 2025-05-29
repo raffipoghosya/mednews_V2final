@@ -103,28 +103,28 @@ class IndexController extends Controller
             ->where('published', 1)
             ->orderBy('date', 'desc')
             ->firstOrFail();
-    
+
         $lastPosts = Post::query()
             ->where('published', 1)
             ->where('id', '!=', $lastPost->id)
             ->orderBy('date', 'desc')
             ->take(12)
             ->get();
-    
+
         $mostViewed = Post::query()
             ->where('published', 1)
             ->orderBy('votes', 'desc')
             ->take(3)
             ->get();
-    
+
         $videos = Video::orderby('id', 'desc')->take(8)->get();
-    
+
         $advertisements = Reclam::where('page', 'index')
             ->orderBy('id', 'desc')
             ->get();
-      
-     
-    
+
+
+
         return view('index', [
             'lastPost' => $lastPost,
             'lastPosts' => $lastPosts,
@@ -133,7 +133,7 @@ class IndexController extends Controller
             'advertisements' => $advertisements,
         ]);
     }
-    
+
     public function news()
     {
         $now = Carbon::now()->format('Y-m-d');
@@ -174,26 +174,19 @@ class IndexController extends Controller
                 ->get();
         }
 
-        // Վերջին banner-ը
-        $banner = Banner::orderBy('id', 'desc')->first();
-
-        // Index էջի գովազդային banner-ները
-        $reclambanners = Reclam::where('type', 'banner')
-            ->where('page', 'index')
-            ->orderBy('id', 'desc')
-            ->get();
 
         // Բոլոր կատեգորիաները (եթե ordering սյունը չես օգտագործում, ապա սա suffice է)
         $cats = Category::all();
-
+        $newsAdvertisements = Reclam::where('page', 'news')
+            ->orderBy('id', 'desc')
+            ->get();
         return view('news', compact(
             'latestNews',
             'mostRead',
             'category',
             'catnews',
             'video',
-            'banner',
-            'reclambanners',
+            'newsAdvertisements',
             'cats'
         ));
     }
@@ -202,7 +195,7 @@ class IndexController extends Controller
     public function interview()
     {
         $now = Carbon::now()->format('Y-m-d');
-    
+
         $interviews = Post::where('published', 1)
             ->where('selected', 0)
             ->whereHas('categories', function ($query) {
@@ -214,16 +207,16 @@ class IndexController extends Controller
             ->orderBy('votes', 'desc')
             ->take(3)
             ->get();
-    
+
         $category = Category::all();
         $video = Video::orderBy('id', 'desc')->take(5)->get();
-        
+
         $cats = Category::orderBy('id', 'asc')->get();
-    
+
         $interviewAdvertisements = Reclam::where('page', 'interview')
             ->orderBy('id', 'desc')
             ->get();
-    
+
         return view('interview', compact(
             'interviews',
             'mostRead',

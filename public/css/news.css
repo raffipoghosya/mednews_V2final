@@ -221,6 +221,7 @@ body {
     width: 140px;
     height: auto;
 }
+
 /* Responsive */
 @media (max-width: 768px) {
     .news-container {

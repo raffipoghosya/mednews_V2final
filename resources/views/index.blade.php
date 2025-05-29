@@ -84,7 +84,7 @@
     <div class="ad-banner" id="ad-banner">
     @foreach($advertisements as $key => $item)
         <a href="{{ $item->href }}" target="_blank" class="ad-slide" style="display: {{ $key === 0 ? 'block' : 'none' }};">
-            <img src="{{ asset('storage/' . $item->image) }}"
+            <img src="{{ asset('storage/'. $item->image) }}"
                  class="ad-image"
                  alt="Ad {{ $key + 1 }}">
         </a>
